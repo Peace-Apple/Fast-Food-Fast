@@ -1,0 +1,66 @@
+/*styling my login and signup pages*/
+body.cover-image{
+	background-image: url(../../assets/images/cover.jpg);
+    background-size: 100%;
+}
+div.login-content{
+    width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0%;
+}
+div.login-main{
+    margin: 5% 37%;
+	width: 25%;
+	padding: 25px 5px 10px 5px;
+	background-color: white;
+	border:1px solid silver;
+}
+div.login-field{
+    background-color: white;
+	width: 70%;
+	margin-left: 35px;
+	border-radius: 5px;
+	padding: 15px 15px;
+
+}
+div.login-heading{
+	font-size: 15px;
+    text-align: center;
+}
+div.login-heading p{
+	font-size: 15px;
+    text-align: center;
+}
+div.login-field input{
+	border: 2px solid #5CDB95;
+	padding: 8px 10px;
+	border-radius: 5px;
+	margin-bottom:15px;
+	width: 92%;
+}
+div.login-field button{
+	border: 2px solid #5CDB95;
+	padding: 8px 10px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #05386B;
+    color: #5CDB95;
+}
+div.login-main p.down{
+    margin-bottom:30px;
+    padding: 5px;
+}
+
+div.login-main p.down a{
+	text-decoration:none;
+    color: #5CDB95;
+}
+div.login-main p.down a.lft{
+	float: left;
+}
+
+div.login-main p.down a.rgt{
+	float: right;
+}
+
