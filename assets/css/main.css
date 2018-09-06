@@ -64,3 +64,165 @@ div.login-main p.down a.rgt{
 	float: right;
 }
 
+/*styling the header*/
+header{
+	width: 100%;
+	position: absolute;
+	top:0%;
+	left:0%;
+	border-bottom: 1px solid silver;
+	background-color: azure;
+}
+header h2{
+	float: left;
+	padding:10px;
+	margin-left: 70px;
+}
+header ul{
+	height: 30px;
+	overflow:auto;
+	list-style: none;
+	float: right;
+	padding: 10px;
+	margin-right: 40px;
+	top: 10px;
+}
+header ul li{
+	display: inline;
+	padding: 0px 0px 0px 15px;
+}
+header ul li a{
+	text-decoration: none;
+	color: violet;
+	position: relative;
+}
+header ul li:hover a{
+	color: black;
+
+}
+header ul li.active a{
+	color: black;
+}
+/*styling the body*/
+.main-image{
+	background-image: url("../../assets/images/blank2.jpg");
+	background-size: cover;
+	
+}
+div.main-content{
+	border:1px solid silver;
+	position: absolute;
+	margin-top: 120px;
+	height: 500px;
+	padding: 20px;
+	margin-left: 100px;
+	margin-right: 100px;
+	background-color: antiquewhite;
+}
+div.home-image{
+	position: absolute;
+	border: 1px solid silver;
+	margin-top: 300px;
+	margin-left: 400px;
+	height: 300px;
+	width: 40%;
+	background-color: white;
+}
+div.home-image img{
+	position: absolute;
+	margin: 10px;
+	width: 96%;
+	height: 250px;
+}
+/*styling menu items on the view food page*/
+div.menu-item{
+	border: 1px solid silver;
+	background-color: white;
+	width: 1100px;
+	border-radius: 5px;
+	height: 400px;
+	position: relative;
+	overflow: auto;
+	padding: 5px;
+	
+}
+div.menu-item ul li{
+	list-style: none;
+	position: relative;
+}
+div.menu-item h4{
+	display: inline;
+	padding:10px;	
+}
+div.menu-item img{
+	height: 150px;
+	width: 150px;
+	border-radius: 5px;
+}
+p.food-links label a{
+	text-decoration:none;
+	color: purple;
+}
+/*styling menu items on the order page*/
+div.menu-item2{
+	border: 1px solid silver;
+	background-color: white;
+	width: 500px;
+	border-radius: 5px;
+	height: 400px;
+	position: relative;
+	overflow: auto;
+	padding: 10px;
+	
+}
+div.menu-item2 ul li{
+	list-style: none;
+	position: relative;
+}
+div.menu-item2 h4{
+	display: inline;
+	padding:10px;	
+}
+div.menu-item2 img{
+	height: 150px;
+	width: 150px;
+	border-radius: 5px;
+}
+/*styling the order form*/
+div.order-content{
+	border: 1px solid silver;
+	background-color: white;
+	width:500px;
+	border-radius: 5px;
+	height: 400px;
+	position: relative;
+	overflow: auto;
+	padding: 10px;
+	float: right;
+	margin: 1px;
+}
+div.order-content tr td input{
+	margin: 2px;
+}
+div.order-content input{
+	border: 1px solid violet;
+	border-radius: 5px;
+	padding: 3px;
+}
+div.order-content select{
+	border: 1px solid violet;
+	border-radius: 5px;
+	padding: 3px;
+}
+div.order-content form input[type="submit"]{
+	background-color: #05386B;
+	color: white;	
+	padding: 5px 8px;
+}
+div.order-content form input[type="reset"]{
+	background-color: #05386B;
+	color: white;
+	padding: 5px 8px;
+}
+
+
