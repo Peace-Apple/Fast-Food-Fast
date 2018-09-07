@@ -3,6 +3,9 @@ body.cover-image{
 	background-image: url(../../assets/images/cover.jpg);
     background-size: 100%;
 }
+.cred{
+	color:white;
+}
 div.login-content{
     width: 100%;
 	height: 100%;
