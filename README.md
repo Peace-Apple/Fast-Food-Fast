@@ -15,6 +15,7 @@ The required features for this app are:
 
 This application is to be used by two categories of people; the admin and the user. So to get through the index page you either log in as a user or an admin if you are authorised.
 At the moment for the template you can use:
+
 ##For Admin
  Username: admin
  Password: admin
