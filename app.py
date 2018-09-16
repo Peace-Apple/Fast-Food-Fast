@@ -5,5 +5,9 @@ app=Flask(__name__)
 def index():
     return jsonify({'about':'Welcome to Fast-Food-Fast API'})
 
+
+@app.route('/orders/', methods=['GET'])
+def all_orders()
+
 if __name__=='__main__':
     app.run(debug=True)
