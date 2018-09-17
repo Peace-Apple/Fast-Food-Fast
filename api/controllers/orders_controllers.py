@@ -36,7 +36,7 @@ class OrdersController(MethodView):
         elif DataValidation.check_string_of_numbers(self.ordered_by) or \
                 DataValidation.check_string_of_numbers(self.order_items):
             return ResponseErrors.invalid_data_format()
-        current_order = self.order_store.make_order(self.ordered_by, self.order_items)
+        current_order = self.orders.make_order(self.ordered_by, self.order_items)
 
         response_object = {
             'status': 'Success',
@@ -79,6 +79,3 @@ class OrdersController(MethodView):
                 return jsonify(response_object), 200
 
         return ResponseErrors.order_absent()
-
-
-
