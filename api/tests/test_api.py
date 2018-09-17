@@ -70,3 +70,16 @@ class TestFastFoodFast(TestCase):
         self.assertTrue(post.content_type, 'application/json')
         self.assertEqual(post.status_code, 400)
 
+    def test_get_orders(self):
+        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Deo', 'Grilled chicken')
+        self.make_order('Bill', 'Ice cream')
+        self.make_order('Sandra', 'Nice Biscuits')
+        self.make_order('Santos', 'Popo drink')
+
+        request_data = self.client().get('/api/v1/orders/')
+
+        response_data = json.loads(request_data.data.decode())
+        self.assertTrue(response_data['status'], 'success')
+        self.assertTrue(response_data['data'])
+        self.assertEqual(request_data.status_code, 200)
