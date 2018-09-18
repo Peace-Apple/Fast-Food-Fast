@@ -35,4 +35,27 @@ class ApplicationData:
         self.orders.append(new_order)
         return self.orders
 
+    @classmethod
+    def get_orders(cls):
+        return cls.orders
+
+    @classmethod
+    def find_one_order(cls, order_id):
+        for order in cls.orders:
+            if order_id == order['order_id']:
+                return order
+        return None
+
+    @classmethod
+    def update_order(cls, order_id, order_status=None):
+        order = cls.find_one_order(order_id)
+        if not order:
+            return False
+        order['order_status'] = order_status
+        response_object = {
+            'status': 'success',
+            'message': 'Status has been updated'
+        }
+        return jsonify(response_object), 202
+
     orders = []
