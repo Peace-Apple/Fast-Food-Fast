@@ -36,7 +36,7 @@ class OrdersController(MethodView):
         elif DataValidation.check_string_of_numbers(self.ordered_by) or \
                 DataValidation.check_string_of_numbers(self.order_items):
             return ResponseErrors.invalid_data_format()
-        current_order = self.orders.make_order(self.ordered_by, self.order_items)
+        current_order = self.order_store.make_order(self.ordered_by, self.order_items)
 
         response_object = {
             'status': 'Success',
@@ -79,3 +79,29 @@ class OrdersController(MethodView):
                 return jsonify(response_object), 200
 
         return ResponseErrors.order_absent()
+    def put(self, order_id):
+        """
+        method to make changes to the order status
+        :param order_id:
+        :return:
+        """
+        order = self.order_store.find_one_order(order_id)
+
+        post_data = request.get_json()
+        key = 'order_status'
+        if key not in post_data:
+            return ResponseErrors.missing_key(key)
+        try:
+            self.order_status = post_data['order_status'].strip()
+        except AttributeError:
+            return ResponseErrors.invalid_data_format()
+
+        if not self.order_status:
+            return ResponseErrors.empty_data_fields()
+        elif DataValidation.check_string_of_numbers(self.order_status):
+            return ResponseErrors.invalid_data_format()
+
+        if not order:
+            return ResponseErrors.order_absent()
+
+        return self.order_store.update_order(order_id, self.order_status)
