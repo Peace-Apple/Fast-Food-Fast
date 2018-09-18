@@ -26,3 +26,30 @@ class ResponseErrors:
             'data': False
         }
         return jsonify(response_object), 400
+
+    @staticmethod
+    def empty_data_storage():
+        response_object = {
+            'status': 'success',
+            'message': 'No orders currently',
+            'data': False
+        }
+        return jsonify(response_object), 200
+
+    @staticmethod
+    def order_absent():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'Order does not exist',
+            'data': False
+        }
+        return jsonify(response_object), 400
+
+    @staticmethod
+    def missing_key(keys):
+        response_object = {
+            'status': 'fail',
+            'error_message': 'Missing key ' + keys,
+            'data': False
+        }
+        return jsonify(response_object), 400
