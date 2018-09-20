@@ -62,7 +62,7 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(post.status_code, 400)
 
     def test_order_with_a_string_of_numbers(self):
-        post = self.make_order('Rubarema', '23413451')
+        post = self.make_order('Sasha', '23413451')
         post_response = json.loads(post.data.decode())
         self.assertTrue(post_response['status'], 'fail')
         self.assertTrue(post_response['error_message'], 'Please use character strings')
@@ -71,11 +71,11 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(post.status_code, 400)
 
     def test_get_orders(self):
-        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Don', 'Fish fillet')
         self.make_order('Deo', 'Grilled chicken')
-        self.make_order('Bill', 'Ice cream')
-        self.make_order('Sandra', 'Nice Biscuits')
-        self.make_order('Santos', 'Popo drink')
+        self.make_order('Allan', 'Ice cream')
+        self.make_order('Diana', 'Nice Biscuits')
+        self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().get('/api/v1/orders/')
 
@@ -86,11 +86,11 @@ class TestFastFoodFast(TestCase):
 
 
     def test_get_order_not_existing(self):
-        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Don', 'Fish fillet')
         self.make_order('Deo', 'Grilled chicken')
-        self.make_order('Bill', 'Ice cream')
-        self.make_order('Sandra', 'Nice Biscuits')
-        self.make_order('Santos', 'Popo drink')
+        self.make_order('Allan', 'Ice cream')
+        self.make_order('Diana', 'Nice Biscuits')
+        self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().get('/api/v1/orders/8/')
 
@@ -101,11 +101,11 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(request_data.status_code, 400)
 
     def test_get_order_that_exists(self):
-        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Don', 'Fish fillet')
         self.make_order('Deo', 'Grilled chicken')
-        self.make_order('Bill', 'Ice cream')
-        self.make_order('Sandra', 'Nice Biscuits')
-        self.make_order('Santos', 'Popo drink')
+        self.make_order('Allan', 'Ice cream')
+        self.make_order('Diana', 'Nice Biscuits')
+        self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().get('/api/v1/orders/2/')
 
@@ -116,11 +116,11 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(request_data.status_code, 200)
 
     def test_update_order_status(self):
-        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Don', 'Fish fillet')
         self.make_order('Deo', 'Grilled chicken')
-        self.make_order('Bill', 'Ice cream')
-        self.make_order('Sandra', 'Nice Biscuits')
-        self.make_order('Santos', 'Popo drink')
+        self.make_order('Allan', 'Ice cream')
+        self.make_order('Diana', 'Nice Biscuits')
+        self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
             '/api/v1/orders/3/',
@@ -137,11 +137,11 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(request_data.status_code, 202)
 
     def test_update_order_absent(self):
-        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Don', 'Fish fillet')
         self.make_order('Deo', 'Grilled chicken')
-        self.make_order('Bill', 'Ice cream')
-        self.make_order('Sandra', 'Nice Biscuits')
-        self.make_order('Santos', 'Popo drink')
+        self.make_order('Allan', 'Ice cream')
+        self.make_order('Diana', 'Nice Biscuits')
+        self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
             '/api/v1/orders/1000/',
@@ -157,11 +157,11 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(request_data.status_code, 400)
 
     def test_integer_feedBack(self):
-        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Don', 'Fish fillet')
         self.make_order('Deo', 'Grilled chicken')
-        self.make_order('Bill', 'Ice cream')
-        self.make_order('Sandra', 'Nice Biscuits')
-        self.make_order('Santos', 'Popo drink')
+        self.make_order('Allan', 'Ice cream')
+        self.make_order('Diana', 'Nice Biscuits')
+        self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
             '/api/v1/orders/1/',
@@ -178,11 +178,11 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(request_data.status_code, 400)
 
     def test_string_of_numbers_feedback(self):
-        self.make_order('Jerry', 'Fish fillet')
+        self.make_order('Don', 'Fish fillet')
         self.make_order('Deo', 'Grilled chicken')
-        self.make_order('Bill', 'Ice cream')
-        self.make_order('Sandra', 'Nice Biscuits')
-        self.make_order('Santos', 'Popo drink')
+        self.make_order('Allan', 'Ice cream')
+        self.make_order('Diana', 'Nice Biscuits')
+        self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
             '/api/v1/orders/1/',
