@@ -1,0 +1,29 @@
+/*styling menu items on the view food page*/
+div.menu-item{
+	border: 1px solid silver;
+	background-color: white;
+	width: 1100px;
+	border-radius: 5px;
+	height: 400px;
+	position: relative;
+	overflow: auto;
+	padding: 5px;
+
+}
+div.menu-item ul li{
+	list-style: none;
+	position: relative;
+}
+div.menu-item h4{
+	display: inline;
+	padding:10px;
+}
+div.menu-item img{
+	height: 150px;
+	width: 150px;
+	border-radius: 5px;
+}
+p.food-links label a{
+	text-decoration:none;
+	color: purple;
+}

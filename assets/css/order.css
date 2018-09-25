@@ -1,0 +1,61 @@
+/*styling menu items on the order page*/
+div.menu-item2{
+	border: 1px solid silver;
+	background-color: white;
+	width: 500px;
+	border-radius: 5px;
+	height: 400px;
+	position: relative;
+	overflow: auto;
+	padding: 10px;
+
+}
+div.menu-item2 ul li{
+	list-style: none;
+	position: relative;
+}
+div.menu-item2 h4{
+	display: inline;
+	padding:10px;
+}
+div.menu-item2 img{
+	height: 150px;
+	width: 150px;
+	border-radius: 5px;
+}
+/*styling the order form*/
+div.order-content{
+	border: 1px solid silver;
+	background-color: white;
+	width:500px;
+	border-radius: 5px;
+	height: 400px;
+	position: relative;
+	overflow: auto;
+	padding: 10px;
+	float: right;
+	margin: 1px;
+}
+div.order-content tr td input{
+	margin: 2px;
+}
+div.order-content input{
+	border: 1px solid violet;
+	border-radius: 5px;
+	padding: 3px;
+}
+div.order-content select{
+	border: 1px solid violet;
+	border-radius: 5px;
+	padding: 3px;
+}
+div.order-content form input[type="submit"]{
+	background-color: #05386B;
+	color: white;
+	padding: 5px 8px;
+}
+div.order-content form input[type="reset"]{
+	background-color: #05386B;
+	color: white;
+	padding: 5px 8px;
+}
