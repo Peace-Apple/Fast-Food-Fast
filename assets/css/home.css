@@ -1,0 +1,16 @@
+/*styling the home page*/
+div.home-image{
+	position: absolute;
+	border: 1px solid silver;
+	margin-top: 300px;
+	margin-left: 400px;
+	height: 300px;
+	width: 40%;
+	background-color: white;
+}
+div.home-image img{
+	position: absolute;
+	margin: 10px;
+	width: 96%;
+	height: 250px;
+}

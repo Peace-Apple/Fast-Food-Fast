@@ -1,0 +1,139 @@
+/*styling my login and signup pages*/
+body.cover-image{
+	background-image: url(../../assets/images/cover.jpg);
+    background-size: 100%;
+}
+.cred{
+	color:white;
+}
+div.login-content{
+    width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0%;
+}
+div.login-main{
+    margin: 5% 37%;
+	width: 25%;
+	padding: 25px 5px 10px 5px;
+	background-color: white;
+	border:1px solid silver;
+}
+div.login-field{
+    background-color: white;
+	width: 70%;
+	margin-left: 35px;
+	border-radius: 5px;
+	padding: 15px 15px;
+
+}
+div.login-heading{
+	font-size: 15px;
+    text-align: center;
+}
+div.login-heading p{
+	font-size: 15px;
+    text-align: center;
+}
+div.login-field input{
+	border: 2px solid  violet;
+	padding: 8px 10px;
+	border-radius: 5px;
+	margin-bottom:15px;
+	width: 92%;
+}
+div.login-field form input[type="button"]{
+	border: 2px solid violet;
+	padding: 8px 10px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #05386B;
+    color: white;
+}
+div.login-field  button[type="submit"]{
+	border: 2px solid violet;
+	padding: 8px 10px;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #05386B;
+    color: white;
+}
+div.login-main p.down{
+    margin-bottom:30px;
+    padding: px;
+}
+
+div.login-main p.down a{
+	text-decoration:none;
+    color: violet;
+}
+div.login-main p.down a.lft{
+	float: left;
+}
+
+div.login-main p.down a.rgt{
+	float: right;
+}
+
+/*styling the header*/
+header{
+	width: 100%;
+	position: absolute;
+	top:0%;
+	left:0%;
+	border-bottom: 1px solid silver;
+	background-color: azure;
+}
+header h2{
+	float: left;
+	padding:10px;
+	margin-left: 70px;
+}
+header ul{
+	height: 30px;
+	overflow:auto;
+	list-style: none;
+	float: right;
+	padding: 10px;
+	margin-right: 40px;
+	top: 10px;
+}
+header ul li{
+	display: inline;
+	padding: 0px 0px 0px 15px;
+}
+header ul li a{
+	text-decoration: none;
+	color: violet;
+	position: relative;
+}
+header ul li:hover a{
+	color: black;
+
+}
+header ul li.active a{
+	color: black;
+}
+/*styling the body*/
+.main-image{
+	background-image: url("../../assets/images/blank2.jpg");
+	background-size: cover;
+	
+}
+div.main-content{
+	border:1px solid silver;
+	position: absolute;
+	margin-top: 120px;
+	height: 500px;
+	padding: 20px;
+	margin-left: 100px;
+	margin-right: 100px;
+	background-color: antiquewhite;
+}
+
+
+
+
+
+
+
