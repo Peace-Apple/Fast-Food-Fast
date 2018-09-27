@@ -1,1 +1,1 @@
-web: gunicorn Fast-Food-Fast run:APP
+web: gunicorn --chdir api run:APP
