@@ -26,6 +26,8 @@ This link takes you where the user interface template is hosted on gh-pages.
 
 #### Heroku: 
 
+This link takes you to the api that is hosted on heroku.
+
 ### Getting Started 
 The following will get you started
 #### Prerequisites
@@ -47,8 +49,10 @@ The ft-challenge-two folder contains the system backend services.
 #### Development setup
 - Create a virtual environment and activate it
     ```bash
-     virtualenv venv
-     source /venv/bin/activate
+     Create: virtualenv venv
+     On windows: source /venv/scripts/activate
+     On linux: /venv/bin/activate
+     
     ```
 - Install dependencies 
     ```bash
@@ -73,7 +77,7 @@ The ft-challenge-two folder contains the system backend services.
 - To run the tests, run the following commands
 
 ```bash
-pytest
+pytest --cov = ft-challenge-two
 ```
 
 #### Built With
@@ -89,7 +93,7 @@ pytest
 
 ## Acknowledgments
 
-* Andela Uganda
+* Andela Software Development Community
 
 
 
