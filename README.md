@@ -1,25 +1,103 @@
 ##FAST-FOOD-FAST
+#### Travis-Badge
+[![Build Status](https://travis-ci.org/Peace-Apple/Fast-Food-Fast.svg?branch=challenge2)](https://travis-ci.org/Peace-Apple/Fast-Food-Fast)
+
+#### Coveralls-Badge
+[![Coverage Status](https://coveralls.io/repos/github/Peace-Apple/Fast-Food-Fast/badge.svg?branch=challenge2)](https://coveralls.io/github/Peace-Apple/Fast-Food-Fast?branch=challenge2)
+
+#### Codeclimate-Badge
+[![Maintainability](https://api.codeclimate.com/v1/badges/44992971357dd65c83a0/maintainability)](https://codeclimate.com/github/Peace-Apple/Fast-Food-Fast/maintainability)
+
+### About
 This is a food service delivery app for a restaurant.
-The required features for this app are:
+
+### Features
+1. User can post a new order for food.
+2. User can get a list of orders.
+3. User can fetch a specific order.
+4. User can update the order status.
+
+### Links
+
+#### Gh-pages:  
+https://peace-apple.github.io/Fast-Food-Fast/
+
+This link takes you where the user interface template is hosted on gh-pages.
+
+#### Heroku: 
+
+This link takes you to the api that is hosted on heroku.
+
+### Getting Started 
+The following will get you started
+#### Prerequisites
+You will need to install the following
+
+```bash
+- git : To clone, update and make commits to the repository
+- python3: The base language used to develop the api
+- pip: A python package used to install project requirements
 ```
-1. Users can create an account and log in
-2. A user should be able to order for food
-3. The admin should be able to add,edit or delete the fast-food items
-4. The admin should be able to see a list of fast-food items
-5. The Admin user should be able to do the following:
-    a. See a list of orders
-    b. Accept and decline orders
-    c. Mark orders as completed
-6. A user should be able to see a history of ordered food
+#### Installation
+The ft-challenge-one folder houses the user interface. To access the user interface, open the index.html.
+The ft-challenge-two folder contains the system backend services.
+- To install the requirements, run:
+- [Python](https://www.python.org/) A general purpose programming language
+- [Pip](https://pypi.org/project/pip/) A tool for installing python packages
+- [Virtualenv](https://virtualenv.pypa.io/en/stable/)  A tool to create isolated Python environments
+
+#### Development setup
+- Create a virtual environment and activate it
+    ```bash
+     Create: virtualenv venv
+     On windows: source /venv/scripts/activate
+     On linux: /venv/bin/activate
+     
+    ```
+- Install dependencies 
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+- Run the application
+    ```bash
+    cd Fast-Food-Fast
+    python run.py
+    ```
+- Thereafter you can access the system api Endpoints:
+
+| End Point                                           | Verb |Use                                       |
+| ----------------------------------------------------|------|------------------------------------------|
+|`/api/v1/orders/`                                    |GET   |Gets all orders              |
+|`/api/v1/orders/<int:order_id>/`                     |GET   |Gets a specific specific order  |
+|`/api/v1/orders/`                                    |POST  |Posts an order                        |
+|`/api/v1/orders/<int:order_id>/`                     |PUT   |Updates the status of an order      |
+
+#### Testing
+
+- To run the tests, run the following commands
+
+```bash
+pytest --cov = ft-challenge-two
 ```
 
-This application is to be used by two categories of people; the admin and the user. So to get through the index page you either log in as a user or an admin if you are authorised.
-At the moment for the template you can use:
+#### Built With
 
-##For Admin
- Username: admin
- Password: admin
+* [Flask](http://flask.pocoo.org/docs/1.0/) - The web framework used
+* [Python](https://www.python.org/) - Framework language
+* HTML
+* CSS
 
- ##For User
- Username: user
- Password: user
+## Authors
+
+* **Peace Acio** - *Initial work* - [Peace-Apple](https://github.com/Peace-Apple)
+
+## Acknowledgments
+
+* Andela Software Development Community
+
+
+
+
+
+
+
