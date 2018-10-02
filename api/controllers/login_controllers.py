@@ -10,17 +10,15 @@ from api.models.user_model import Users
 
 
 
-class LoginController(MethodView):
+class LoginControl(MethodView):
     """
     User login class with special methods to handle user login
     """
-    _user_ = Users()
-    validate = Validators()
-    auth = Authenticate
+    user = Users()
     orders = Orders()
 
     def post(self):
-        # get post data
+        # to get post data
         post_data = request.get_json()
 
         keys = ('user_name', 'password')
