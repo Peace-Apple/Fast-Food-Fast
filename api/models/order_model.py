@@ -14,7 +14,7 @@ jwt = JWTManager(app)
 
 class ApplicationData:
     """
-        A class that contains various methods that contain queries to the database
+        A class that contains various methods that store data for the application
     """
 
     class OrderModel:
@@ -45,32 +45,22 @@ class ApplicationData:
             return jsonify(access_token = access_token), 200
 
 
+        def make_order(self):
+            pass
 
+        def get_history(self):
+            pass
 
+        def get_orders(self):
+            pass
 
+        def get_single_order(self):
+            pass
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        def update_order_status(self):
+            pass
 
         def get_menu(self):
-
             pass
 
         def add_meal(self):
