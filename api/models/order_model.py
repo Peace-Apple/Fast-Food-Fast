@@ -1,9 +1,40 @@
 """
 Module to handle data storage
 """
+
+import psycopg2
+
 import datetime
 
 from flask import jsonify
+
+class DatabaseConnection:
+
+    def __init__(self):
+        psycopg2.connect(database="fastfoodfast", user="postgres", password="apple123", host="127.0.0.1", port="5432")
+        connection.cusor()
+        print("Database opened successfully")
+
+
+
+    def create_tables(self):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class ApplicationData:
