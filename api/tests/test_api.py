@@ -25,7 +25,7 @@ class TestFastFoodFast(TestCase):
         :return:
         """
         post_data = self.client().post(
-            '/api/v1/orders/',
+            '/api/v2/users/orders/',
             data=json.dumps(dict(
                 ordered_by=ordered_by,
                 order_items=order_items
@@ -77,7 +77,7 @@ class TestFastFoodFast(TestCase):
         self.make_order('Diana', 'Nice Biscuits')
         self.make_order('Viola', 'Popo drink')
 
-        request_data = self.client().get('/api/v1/orders/')
+        request_data = self.client().get('/api/v2/orders/')
 
         response_data = json.loads(request_data.data.decode())
         self.assertTrue(response_data['status'], 'success')
@@ -92,7 +92,7 @@ class TestFastFoodFast(TestCase):
         self.make_order('Diana', 'Nice Biscuits')
         self.make_order('Viola', 'Popo drink')
 
-        request_data = self.client().get('/api/v1/orders/8/')
+        request_data = self.client().get('/api/v2/orders/8/')
 
         response_data = json.loads(request_data.data.decode())
         self.assertTrue(response_data['status'], 'fail')
@@ -107,7 +107,7 @@ class TestFastFoodFast(TestCase):
         self.make_order('Diana', 'Nice Biscuits')
         self.make_order('Viola', 'Popo drink')
 
-        request_data = self.client().get('/api/v1/orders/2/')
+        request_data = self.client().get('/api/v2/orders/2/')
 
         response_data = json.loads(request_data.data.decode())
         self.assertTrue(response_data['status'], 'success')
@@ -123,7 +123,7 @@ class TestFastFoodFast(TestCase):
         self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
-            '/api/v1/orders/3/',
+            '/api/v2/orders/3/',
             data=json.dumps(dict(
                 order_status="Ready"
             )),
@@ -144,7 +144,7 @@ class TestFastFoodFast(TestCase):
         self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
-            '/api/v1/orders/1000/',
+            '/api/v2/orders/1000/',
             data=json.dumps(dict(
                 order_status="Ready"
             )),
@@ -164,7 +164,7 @@ class TestFastFoodFast(TestCase):
         self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
-            '/api/v1/orders/1/',
+            '/api/v2/orders/1/',
             data=json.dumps(dict(
                 order_status=536536
             )),
@@ -185,7 +185,7 @@ class TestFastFoodFast(TestCase):
         self.make_order('Viola', 'Popo drink')
 
         request_data = self.client().put(
-            '/api/v1/orders/1/',
+            '/api/v2/orders/1/',
             data=json.dumps(dict(
                 order_status='536536'
             )),
@@ -200,7 +200,7 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(request_data.status_code, 400)
 
     def test_get_empty_orders(self):
-        request_data = self.client().get('/api/v1/orders/')
+        request_data = self.client().get('/api/v2/orders/')
 
         response_data = json.loads(request_data.data.decode())
 
@@ -210,7 +210,7 @@ class TestFastFoodFast(TestCase):
         self.assertEqual(request_data.status_code, 200)
 
     def test_get_order_from_empty_storage(self):
-        request_data = self.client().get('/api/v1/orders/1/')
+        request_data = self.client().get('/api/v2/orders/1/')
 
         response_data = json.loads(request_data.data.decode())
         self.assertTrue(response_data['status'], 'success')
