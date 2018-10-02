@@ -4,9 +4,7 @@ Module to handle any logic
 from flask import request, jsonify
 from flask.views import MethodView
 
-from api.handlers.response_errors import ResponseErrors
 from api.models.order_model import ApplicationData
-from api.utils.validation import DataValidation
 
 
 class OrdersController(MethodView):
