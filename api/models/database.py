@@ -68,37 +68,9 @@ class DatabaseConnection:
             if self.connection is not None:
                 self.connection.close()
 
+if __name__ == '__main__':
 
-class TableData:
-
-        def __init__(self):
-            self.connection = psycopg2.connect(database="fastfoodfast", user="postgres", password="apple123",
-                                               host="127.0.0.1", port="5432")
-            self.connection.autocommit = True
-            self.cursor = self.connection.cursor()
-
-        def insert_into_user(self):
-            sql = """INSERT INTO USERS(user_id, username, email, phone_number, user_type, password, is_loggedin) \
-            VALUES('{0}', '{1}', '{2}', '{3}', FALSE, '{5}', FALSE)"""
-            self.connection.commit()
-            self.cursor.execute(sql)
-            return True
-
-
-        def insert_into_menu(self):
-            sql = """INSERT INTO MENU(item_id, item_name, item_category, price)\
-            VALUES('{0}', '{1}', '{2}', '{3}')"""
-            self.connection.commit()
-            self.cursor.execute(sql)
-            return True
-
-
-        def insert_into_orders(self):
-            sql = """INSERT INTO ORDERS(order_id, user_id, item_id, order_status, quantity)\
-                        VALUES('{0}', '{1}', '{2}', new '{4}')"""
-            self.connection.commit()
-            self.cursor.execute(sql)
-            return True
+    DatabaseConnection().create_tables()
 
 
 
