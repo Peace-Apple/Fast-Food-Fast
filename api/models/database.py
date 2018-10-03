@@ -73,21 +73,40 @@ class DatabaseConnection:
             if self.connection is not None:
                 self.connection.close()
 
+
+
     def insert_user(self, user_name, email, phone_number, password):
+        password_hash = generate_password_hash(password, method='sha256')
         add_user = "INSERT INTO users (user_name, email, phone_number, password)\
-         VALUES ('"+user_name+"', '"+email+"', '"+phone_number+"', '"+password+"')"
+         VALUES ('"+user_name+"', '"+email+"', '"+phone_number+"', '"+password_hash+"');"
         self.cursor.execute(add_user)
 
     def insert_order(self, ):
         add_order = "INSERT INTO orders (user_id, item_id)\
-         VALUES (%s,%s)"
+         VALUES (%s,%s);"
         self.cursor.execute(add_order)
 
 
     def insert_menu_item(self):
         add_item = "INSERT INTO menu (user_id, item_name)\
-         VALUES ('"+user_id+"','"+item_name+"')"
+         VALUES ('"+user_id+"','"+item_name+"');"
         self.cursor.execute(add_item)
+
+    def get_all_users(self):
+        all_users = "SELECT * FROM users;"
+        self.cursor.execute(all_users)
+        users = self.cursor.fetchall()
+        return users
+
+    def get_a_specific_user(self):
+        specific_user = "SELECT * FROM users WHERE user_name = %s ", [user_id]
+        self.cursor.execute(specific_user)
+        user = self.cursor.fetchone()
+        return user
+
+
+
+
 
 
 
