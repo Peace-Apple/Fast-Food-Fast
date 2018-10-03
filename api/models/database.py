@@ -81,7 +81,7 @@ class DatabaseConnection:
          VALUES ('"+user_name+"', '"+email+"', '"+phone_number+"', '"+password_hash+"');"
         self.cursor.execute(add_user)
 
-    def insert_order(self, ):
+    def insert_order(self, user_id, item_id ):
         add_order = "INSERT INTO orders (user_id, item_id)\
          VALUES (%s,%s);"
         self.cursor.execute(add_order)
@@ -109,6 +109,24 @@ class DatabaseConnection:
         self.cursor.execute(menu_item)
         menu = self.cursor.fetchone()
         return menu
+
+    def get_all_orders(self):
+        all_orders = "SELECT * FROM orders;"
+        self.cursor.execute(all_orders)
+        orders = self.cursor.fetchall()
+        return orders
+
+    def get_a_specific_order(self):
+        one = "SELECT * FROM orders WHERE order_item = %s", [order_id]
+        self.cursor.execute(one)
+        order = self.cursor.fetchone()
+        return order
+
+    def get_order_history(self):
+        pass
+
+    def update_order(self):
+        pass
 
 
 
