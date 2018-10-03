@@ -140,30 +140,6 @@ class ResponseErrors:
         }), 400
 
     @staticmethod
-    def user_bearer_token_error():
-        response_object = {
-            'status': 'fail',
-            'message': 'Bearer token malformed'
-        }
-        return jsonify(response_object), 401
-
-    @staticmethod
-    def invalid_user_token(resp):
-        response_object = {
-            'status': 'fail',
-            'message': resp
-        }
-        return jsonify(response_object), 401
-
-    @staticmethod
-    def denied_permission():
-        response_object = {
-            'status': 'fail',
-            'message': 'Permission denied, Please Login as Admin'
-        }
-        return jsonify(response_object), 403
-
-    @staticmethod
     def no_items(item):
         response_object = {
             'status': 'successful',
