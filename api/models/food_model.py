@@ -42,7 +42,7 @@ class FoodItems():
 
         return menu_data.__dict__
 
-    def get_menu(self) -> [FoodModel]:
+    def get_menu(self)  -> [FoodModel]:
         """
         Get all menu items
         :return:
