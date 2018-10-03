@@ -57,7 +57,7 @@ class MenusController(MethodView):
         Method to return existing menu items
         :return:
         """
-        menu_data = self.food_model.get_menu()
+        menu_data = self.food_model.get_menu_items()
 
         if menu_data:
             if isinstance(menu_data, list) and len(menu_data) > 0:
@@ -65,14 +65,14 @@ class MenusController(MethodView):
                     "status": "successful",
                     "data": [obj.__dict__ for obj in menu_data]
                         }
-            return jsonify(response_object), 200
+                return jsonify(response_object), 200
             elif isinstance(menu_data, object):
 
-            response_object = {
+                response_object = {
                     "status": "successful",
                     "data": [menu_data.__dict__]
                         }
-            return jsonify(response_object), 200
+                return jsonify(response_object), 200
             else:
                 return ResponseErrors.no_items('menu')
 
