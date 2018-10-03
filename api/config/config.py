@@ -20,8 +20,9 @@ class DevelopmentConfig(Config):
     The configuration for the development environment
     """
     DEBUG = True
-    SECRET = 'efa27950565790fbaecfb5fb64b84a6a7c48d06d'
-    SECRET_KEY = 'e5ac358c-f0bf-11e5-9e39-d3b532c10a28'
+    TESTING = True
+    SECRET_KEY = 'pass123'
+    ENV = 'development'
 
 
 class TestingConfig(Config):
@@ -29,9 +30,8 @@ class TestingConfig(Config):
     The configuration for testing
     """
     DEBUG = True
-    SECRET = 'efa27950565790fbaecfb5fb64b84a6a7c48d06d'
     TESTING = True
-    SECRET_KEY = 'e5ac358c-f0bf-11e5-9e39-d3b532c10a28'
+    SECRET_KEY = 'pass123'
 
 
 class ProductionConfig(Config):
