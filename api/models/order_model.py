@@ -48,7 +48,7 @@ class OrderModel:
 
         return order_data.__dict__
 
-    def get_orders(self) -> [OrderModel]:
+    def get_orders(self):
         """
         Get all orders
         :return:
@@ -81,7 +81,7 @@ class OrderModel:
                 return order_data
         return None
 
-    def order_history(self, user_id) -> [OrderModel]:
+    def order_history(self, user_id):
         """
         Get order history of a user
         :return:
@@ -91,7 +91,7 @@ class OrderModel:
 
         if response:
             if isinstance(response, list) and len(response) > 1:
-                data: List[OrderModel] = []
+                data = List[OrderModel] = []
                 for res in response:
                     order_data = OrderModel(res['order_id'], res['order_item'], res['quantity'])
                     order_data.item_id = res['item_id']
