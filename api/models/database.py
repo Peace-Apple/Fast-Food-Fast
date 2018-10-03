@@ -27,7 +27,7 @@ class DatabaseConnection:
             """
             CREATE TABLE IF NOT EXISTS "users" (
                     user_id SERIAL PRIMARY KEY,
-                    username VARCHAR(25) NOT NULL,
+                    user_name VARCHAR(25) NOT NULL,
                     email VARCHAR(50) UNIQUE NOT NULL,
                     phone_number INTEGER NOT NULL,
                     user_type BOOLEAN NOT NULL DEFAULT FALSE,
@@ -38,9 +38,12 @@ class DatabaseConnection:
             """
             CREATE TABLE IF NOT EXISTS "menu" (
                     item_id SERIAL PRIMARY KEY, 
-                    item_category VARCHAR(50) NOT NULL,
                     item_name VARCHAR(50) NOT NULL, 
-                    price INTEGER NOT NULL
+                    price INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES "users" (user_id)
+                    ON UPDATE CASCADE ON DELETE CASCADE
+                    
                 );
             """,
             """
@@ -48,12 +51,13 @@ class DatabaseConnection:
                     order_id SERIAL PRIMARY KEY, 
                     user_id INTEGER NOT NULL,
                     item_id INTEGER NOT NULL, 
-                    order_status VARCHAR(25) NOT NULL DEFAULT 'new',
+                    order_status VARCHAR(25) NOT NULL DEFAULT 'New',
                     quantity INTEGER NOT NULL,
                     FOREIGN KEY (user_id) REFERENCES "users" (user_id)
                     ON UPDATE CASCADE ON DELETE CASCADE,
                     FOREIGN KEY (item_id) REFERENCES "menu" (item_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE
+                    ON UPDATE CASCADE ON DELETE CASCADE,
+                    order_date TIMESTAMP DEFAULT NOW()
                 );
             """)
 
@@ -62,15 +66,33 @@ class DatabaseConnection:
                 self.cursor.execute(command)
             self.connection.commit()
             self.cursor.close()
+            print("Tables created successfully")
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         finally:
             if self.connection is not None:
                 self.connection.close()
 
-if __name__ == '__main__':
+    def insert_user(self, user_name, email, phone_number, password):
+        add_user = "INSERT INTO users (user_name, email, phone_number, password)\
+         VALUES ('"+user_name+"', '"+email+"', '"+phone_number+"', '"+password+"')"
+        self.cursor.execute(add_user)
 
-    DatabaseConnection().create_tables()
+    def insert_order(self, ):
+        add_order = "INSERT INTO orders (user_id, item_id)\
+         VALUES (%s,%s)"
+        self.cursor.execute(add_order)
+
+
+    def insert_menu_item(self):
+        add_item = "INSERT INTO menu (user_id, item_name)\
+         VALUES ('"+user_id+"','"+item_name+"')"
+        self.cursor.execute(add_item)
+
+
+
+
+
 
 
 
