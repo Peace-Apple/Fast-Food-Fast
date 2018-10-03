@@ -1,8 +1,8 @@
 """
 Module for the user
 """
-
 from api.models.database import DatabaseConnection
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 
 
 class UsersModel:
@@ -10,8 +10,7 @@ class UsersModel:
     Model to hold user data
     """
 
-    def __init__(self, user_name=None, email=None,
-                 contact=None, password=None, user_type=None):
+    def __init__(self, user_name=None, email=None, phone_number=None, password=None, user_type=None):
 
         """
         User model template
@@ -23,7 +22,7 @@ class UsersModel:
         self.user_name = user_name
         self.email = email
         self.password = password
-        self.contact = contact
+        self.phone_number = phone_number
         self.user_type = user_type
         self.user_id = None
 
@@ -33,67 +32,62 @@ class Users():
     Define user module attributes accessed by callers
     """
 
-    _table_ = "user"
-    _database_ = DatabaseConnection()
 
-    def register_user(self, user_name=None, email=None, contact=None,
-                      password=None, user_type=None) -> UsersModel or None:
+    def register_user(self, user_name=None, email=None, phone_number=None,
+                      password=None, user_type=None):
         """
         Register new user
         :param user_name:
         :param email:
-        :param contact:
+        :param phone_number:
         :param password:
         :param user_type:
         :return:
         """
-        user = UserModel(user_name, email, contact, password, user_type)
-        user.password = user.password.decode('utf8')
-        del user.user_id
-        self._database_.insert(self._table_, user.__dict__)
-
+        user = UsersModel(user_name, email, phone_number, password, user_type)
+        DatabaseConnection.insert_user()
         return user
 
-    def find_user_by_username(self, username) -> UsersModel or None:
+    def find_user_by_username(self, username):
         """
         find a specific user given a user name
         :return:
         :param username:
         :return:
         """
-        criteria = {'user_name': username}
-        res = self._database_.find(self._table_, criteria=criteria)
-        if res and isinstance(res, dict):
-            user = UserModel(res['user_name'], res['email'],
-                             res['contact'], None, res['user_type'])
-            user.user_id = res["user_id"]
-            user.password = res['password'].encode('utf8')
+        pers = {'user_name': username}
+        user = DatabaseConnection.get_all_users()
+        if pers and isinstance(pers, dict):
+            user = UsersModel(pers['user_name'], pers['email'],
+                             pers['phone_number'], None, pers['user_type'])
+            user.user_id = pers["user_id"]
+            user.password = pers['password'].generate_password_hash()
             return user
         return None
 
-    def find_user_by_email(self, email) -> UsersModel or None:
+    def find_user_by_email(self, email):
         """
         find a specific user given an email
         :param email:
         :return:
         """
-        criteria = {'email': email}
-        res = self._database_.find(self._table_, criteria=criteria)
+        eml = {'email': email}
+        res = DatabaseConnection.get_all_users()
         if res and isinstance(res, dict):
             user = UserModel(res['user_name'], res['email'],
-                             res['contact'], None, res['user_type'])
+                             res['phone_number'], None, res['user_type'])
             user.user_id = res['user_id']
             return user.email
         return None
 
-    def find_user_by_id(self, user_id) -> UsersModel or None:
+    def find_user_by_id(self, user_id):
         """
         find a specific user given a user id
         :param user_id:
         :return:
         """
         criteria = {'user_id': user_id}
-        res = self._database_.find(self._table_, criteria=criteria)
+        res = DatabaseConnection().get_all_users()
         if res and isinstance(res, dict):
             user = UserModel(res['user_name'], res['email'],
                              res['contact'], None, res['user_type'])
