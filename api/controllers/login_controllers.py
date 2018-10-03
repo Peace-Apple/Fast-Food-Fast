@@ -7,6 +7,8 @@ from flask.views import MethodView
 
 from api.models.order_model import OrderModel
 from api.models.user_model import Users
+from api.utils.validation import DataValidation
+from api.handlers.response_errors import  ResponseErrors
 
 
 
@@ -14,8 +16,9 @@ class LoginControl(MethodView):
     """
     User login class with special methods to handle user login
     """
-    user = Users()
-    orders = Orders()
+    myUser = Users()
+    orders = OrderModel()
+    validate = DataValidation()
 
     def post(self):
         # to get post data
@@ -23,24 +26,24 @@ class LoginControl(MethodView):
 
         keys = ('user_name', 'password')
         if not set(keys).issubset(set(post_data)):
-            return ReturnError.missing_fields(keys)
+            return ResponseErrors.missing_fields(keys)
 
         try:
             user_name = post_data.get("user_name").strip()
             password = post_data.get("password").strip()
         except AttributeError:
-            return ReturnError.invalid_data_type()
+            return ResponseErrors.invalid_data_format()
 
         if not user_name or not password:
-            return ReturnError.empty_fields()
+            return ResponseErrors.empty_data_fields()
 
-        user = self._user_.find_user_by_username(user_name)
+        user = self.user.find_user_by_username(user_name)
 
         if user and self.auth.verify_password(password, user.password):
             auth_token = self.auth.encode_auth_token(user.user_id)
             response_object = {
                 'status': 'success',
-                'message': 'Welcome, You are now logged in',
+                'message': 'You have logged in',
                 'auth_token': auth_token.decode(),
                 'logged_in_as': user.user_type
             }
