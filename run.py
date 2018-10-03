@@ -1,10 +1,11 @@
 """
-app root of the api endpoints
+app root of the api endpoints. this module runs the application
 """
 
 from flask import Flask
 import api.config.config
 from api.views.routes import Urls
+from flask_jwt_extended import JWTManager
 
 
 class Server:
@@ -24,6 +25,9 @@ class Server:
 
 
 APP = Server().create_app(config=api.config.config.DevelopmentConfig)
+
+APP.config['JWT_SECRET_KEY'] = 'pass123'
+jwt = JWTManager(APP)
 
 
 if __name__ == '__main__':
