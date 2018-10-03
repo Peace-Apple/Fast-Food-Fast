@@ -5,8 +5,9 @@ from flask import request, jsonify
 from flask.views import MethodView
 
 from api.handlers.response_errors import ResponseErrors
+
 from api.models.food_model import FoodItems
-from api.models.order_model import Orders
+from api.models.order_model import OrderModel
 from api.utils.validation import DataValidation
 
 
@@ -18,7 +19,7 @@ class OrdersController(MethodView):
     order_item = None
     validate = DataValidation()
     menu = FoodItems()
-    orders = Orders()
+    orders = OrderModel()
     quantity = None
 
     def post(self):
@@ -45,7 +46,7 @@ class OrdersController(MethodView):
         elif not self.DataValidation.check_item_name(self.order_item):
             return ResponseErrors.item_not_on_the_menu(self.order_item.lower())
 
-        order = self.orders.make_order(self.order_item.lower(), self.special_notes)
+        order = self.OrderModel.make_order(self.order_item.lower(), self.quantity)
 
         response_object = {
             'status': 'success',
