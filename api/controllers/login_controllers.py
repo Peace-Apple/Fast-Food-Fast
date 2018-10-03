@@ -58,3 +58,28 @@ class LoginControl(MethodView):
             }
             return jsonify(response_object), 404
 
+    def get(self):
+        """
+        Method to return the order history of a user
+        :return:
+            """
+
+        order_history = self.OrderModel.order_history()
+        if order_history:
+            if isinstance(order_history, list):
+                response_object = {
+                    "status": "success",
+                    "data": [obj.__dict__ for obj in order_history]
+                        }
+                return jsonify(response_object), 200
+            elif isinstance(order_history, object):
+
+                response_object = {
+                    "status": "success",
+                    "data": [order_history.__dict__]
+                        }
+                return jsonify(response_object), 200
+            else:
+                return ResponseErrors.no_items('order')
+
+
