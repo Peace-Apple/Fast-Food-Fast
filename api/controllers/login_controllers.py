@@ -11,6 +11,7 @@ from api.utils.validation import DataValidation
 from api.handlers.response_errors import  ResponseErrors
 from api.models.database import DatabaseConnection
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 
@@ -40,7 +41,7 @@ class LoginControl(MethodView):
             return ResponseErrors.empty_data_fields()
 
         user_id = self.myUser.find_user_by_username(user_name)
-        password_hash = self.user_model.Users.generate_hash(password)
+        password_hash = self.generate_password_hash(password)
         if user_id and password_hash:
 
             response_object = {
