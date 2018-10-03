@@ -12,6 +12,7 @@ class UsersModel:
 
     def __init__(self, user_name=None, email=None,
                  contact=None, password=None, user_type=None):
+
         """
         User model template
         :rtype: int
@@ -27,7 +28,7 @@ class UsersModel:
         self.user_id = None
 
 
-class Users(metaclass=Singleton):
+class Users():
     """
     Define user module attributes accessed by callers
     """
@@ -36,7 +37,7 @@ class Users(metaclass=Singleton):
     _database_ = DatabaseConnection()
 
     def register_user(self, user_name=None, email=None, contact=None,
-                      password=None, user_type=None) -> UserModel or None:
+                      password=None, user_type=None) -> UsersModel or None:
         """
         Register new user
         :param user_name:
@@ -53,7 +54,7 @@ class Users(metaclass=Singleton):
 
         return user
 
-    def find_user_by_username(self, username) -> UserModel or None:
+    def find_user_by_username(self, username) -> UsersModel or None:
         """
         find a specific user given a user name
         :return:
@@ -70,7 +71,7 @@ class Users(metaclass=Singleton):
             return user
         return None
 
-    def find_user_by_email(self, email) -> UserModel or None:
+    def find_user_by_email(self, email) -> UsersModel or None:
         """
         find a specific user given an email
         :param email:
@@ -85,7 +86,7 @@ class Users(metaclass=Singleton):
             return user.email
         return None
 
-    def find_user_by_id(self, user_id) -> UserModel or None:
+    def find_user_by_id(self, user_id) -> UsersModel or None:
         """
         find a specific user given a user id
         :param user_id:
