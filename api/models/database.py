@@ -104,6 +104,12 @@ class DatabaseConnection:
         user = self.cursor.fetchone()
         return user
 
+    def get_menu_items(self):
+        menu_item = "SELECT * FROM menu WHERE item_name = %s", [user_id]
+        self.cursor.execute(menu_item)
+        menu = self.cursor.fetchone()
+        return menu
+
 
 
 
