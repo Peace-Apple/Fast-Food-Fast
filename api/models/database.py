@@ -121,22 +121,16 @@ class DatabaseConnection:
         order = self.cursor.fetchone()
         return order
 
-    def get_order_history(self):
-        pass
-
-    def update_order(self):
-        pass
-
     def find_user_by_email(self, email):
         """
         find a specific user given an email
         :param email:
         :return:
         """
-        self.cursor.execute("SELECT * FROM users WHERE email = %s", [email])
+        email = "SELECT * FROM users WHERE email = '{}'".format(email)
+        self.cursor.execute(email)
         check_email = self.cursor.fetchone()
-        if check_email:
-            return "This email exists already, Please use another"
+        return check_email
 
     def find_user_by_username(self, username):
         """
@@ -145,11 +139,11 @@ class DatabaseConnection:
         :param username:
         :return:
         """
-
-        self.cursor.execute("SELECT * FROM users WHERE user_name = %s", [username])
+        name = "SELECT * FROM users WHERE user_name ='{}'".format(username)
+        self.cursor.execute(name)
         check_username = self.cursor.fetchone()
-        if check_username:
-            return "This username exists already, Please use another"
+        return check_username
+
 
     def find_user_by_id(self, user_id):
         """
@@ -157,13 +151,17 @@ class DatabaseConnection:
         :param user_id:
         :return:
         """
-
-        self.cursor.execute("SELECT * FROM users WHERE user_id = %s", [user_id])
+        user = "SELECT * FROM users WHERE user_id = '{}'".format(user_id)
+        self.cursor.execute(user)
         check_id = self.cursor.fetchone()
-        if check_id:
-            return True
+        return check_id
 
 
+    def get_order_history(self):
+        pass
+
+    def update_order(self):
+        pass
 
 
 
