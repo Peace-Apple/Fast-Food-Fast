@@ -11,8 +11,8 @@ class DataValidation:
     Class has methods to handle validation of data
     """
 
-    myUser = DatabaseConnection()
-    food_item = FoodItems()
+    mydata = DatabaseConnection()
+
 
     @staticmethod
     def validate_email(email) -> bool:
@@ -32,7 +32,7 @@ class DataValidation:
         :param email:
         :return:
         """
-        if self.myUser.find_user_by_email(email):
+        if self.mydata.find_user_by_email(email):
             return False
         return True
 
@@ -66,7 +66,7 @@ class DataValidation:
         :param username:
         :return:
         """
-        if self.myUser.find_user_by_username(username):
+        if self.mydata.find_user_by_username(username):
             return False
         return True
 
@@ -95,7 +95,7 @@ class DataValidation:
         :param user_id:
         :return:
         """
-        user_data = self.myUser.find_user_by_id(user_id)
+        user_data = self.mydata.find_user_by_id(user_id)
 
         if user_data.user_type == "admin":
             return user_data
@@ -108,3 +108,24 @@ class DataValidation:
             return True
         except ValueError:
             return False
+    def check_item_name(self, item_name: str):
+        """
+        Check if item exists already
+        :param item_name:
+        :return:
+        """
+        if self.mydata.find_item_by_name(item_name):
+            return True
+        return False
+
+    @staticmethod
+    def validate_name(name):
+        """
+        Username validator
+        :param name:
+        :return:
+        """
+        username_regex = re.compile("^[A-Za-z\s]{4,30}$")
+        if not username_regex.match(name):
+            return False
+        return True

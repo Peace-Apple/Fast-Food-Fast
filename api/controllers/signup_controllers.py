@@ -1,7 +1,7 @@
 """
 module to handle signup
 """
-import copy
+
 from flask import request, jsonify
 from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
@@ -52,7 +52,7 @@ class SignupControl(MethodView):
 
         user = self.myUser.register_user(user_name, email, phone_number,
                                          Users.hash_password(password), user_type.lower())
-        user = copy.deepcopy(user)
+
         del user.password
 
         response_object = {

@@ -42,7 +42,7 @@ class LoginControl(MethodView):
 
         user_id = self.myUser.find_user_by_username('user_name')
         password_hash = Users.hash_password(password)
-        if user_id and password_hash:
+        if user_id == True and password_hash == True:
 
             response_object = {
                 'status': 'success',
@@ -57,6 +57,12 @@ class LoginControl(MethodView):
                 'message': 'User does not exist.'
             }
             return jsonify(response_object), 404
+
+
+
+
+
+
 
     # def get(self):
     #     """
