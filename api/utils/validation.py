@@ -1,14 +1,18 @@
 """
 Module to handle validation
 """
-from api.models.user_model import Users
+import re
+
+from api.models.food_model import FoodItems
+from api.models.database import DatabaseConnection
 
 class DataValidation:
     """
     Class has methods to handle validation of data
     """
 
-    myUser = Users()
+    myUser = DatabaseConnection()
+    food_item = FoodItems()
 
     @staticmethod
     def validate_email(email) -> bool:
@@ -56,16 +60,6 @@ class DataValidation:
             return False
         return True
 
-    """
-    @staticmethod
-    def check_string_of_numbers(test_data):
-        try:
-            int(test_data)
-            return True
-        except ValueError:
-            return False
-    """
-
     def check_if_user_name_exists(self, username):
         """
         Check if the username already exists
@@ -77,15 +71,15 @@ class DataValidation:
         return True
 
     @staticmethod
-    def validate_contact(contact) -> bool:
+    def validate_phone(phone_number) -> bool:
         """
         Validate contact number. Must be at least 10 digits
         and not more than 13
-        :param contact:
+        :param phone_number:
         :return:
         """
-        contact_regex = re.compile("^[0-9]{10,13}$")
-        if contact_regex.match(contact):
+        phone_regex = re.compile("^[0-9]{10,13}$")
+        if phone_regex.match(phone_number):
             return True
         return False
 
@@ -106,7 +100,6 @@ class DataValidation:
         if user_data.user_type == "admin":
             return user_data
         return False
-
 
     @staticmethod
     def check_string_of_numbers(test_data):

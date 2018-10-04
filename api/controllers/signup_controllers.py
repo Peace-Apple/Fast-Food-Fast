@@ -1,22 +1,21 @@
 """
 module to handle signup
 """
-
+import copy
 from flask import request, jsonify
 from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
+from api.models.database import DatabaseConnection
 from api.models.user_model import Users
 from api.utils.validation import DataValidation
 from werkzeug.security import generate_password_hash, check_password_hash
-
 
 class SignupControl(MethodView):
     """
     Registering a user
     """
     myUser = Users()
-    validate = DataValidation()
-
+    val = DataValidation()
 
     def post(self):
 
@@ -36,22 +35,23 @@ class SignupControl(MethodView):
 
         if not user_name or not email or not phone_number or not password or not user_type:
             return ResponseErrors.empty_data_fields()
-        elif not self.DataValidation.validate_password(password, 6):
+        elif not self.val.validate_password(password, 6):
             return ResponseErrors.invalid_password()
-        elif not self.DataValidation.validate_email(email):
+        elif not self.val.validate_email(email):
             return ResponseErrors.invalid_email()
-        elif not self.DataValidation.check_if_email_exists(email):
+        elif not self.val.check_if_email_exists(email):
             return ResponseErrors.email_already_exists()
-        elif not self.DataValidation.validate_phone(phone_number):
+        elif not self.val.validate_phone(phone_number):
             return ResponseErrors.invalid_contact()
-        elif not self.DataValidation.validate_username(user_name):
+        elif not self.val.validate_username(user_name):
             return ResponseErrors.invalid_name()
-        elif not self.DataValidation.check_if_user_name_exists(user_name):
+        elif not self.val.check_if_user_name_exists(user_name):
             return ResponseErrors.username_already_exists()
-        elif not self.DataValidation.validate_user_type(user_type):
+        elif not self.val.validate_user_type(user_type):
             return ResponseErrors.invalid_user_type()
-        user = self.myUser.register_user(user_name, email, phone_number, generate_password_hash(password), user_type.lower())
 
+        user = self.myUser.register_user(user_name, email, phone_number,
+                                         Users.hash_password(password), user_type.lower())
         user = copy.deepcopy(user)
         del user.password
 
@@ -59,5 +59,5 @@ class SignupControl(MethodView):
             'status': 'success',
             'message': 'Successfully registered',
             'data': user.__dict__
-        }
+                }
         return jsonify(response_object), 201

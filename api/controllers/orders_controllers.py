@@ -65,7 +65,7 @@ class OrdersController(MethodView):
         if order_id:
             return self.get_single_order(order_id)
 
-        current_orders = self.OrderModel.get_orders()
+        current_orders = OrderModel().get_orders()
 
         if current_orders:
             if isinstance(current_orders, list) and len(current_orders) > 0:

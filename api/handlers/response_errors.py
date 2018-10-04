@@ -1,7 +1,7 @@
 """
 Module to handle all error responses
 """
-from flask import jsonify
+from flask import jsonify, request
 
 
 class ResponseErrors:
@@ -81,7 +81,7 @@ class ResponseErrors:
     def invalid_contact():
         return jsonify({"error_message": "Contact {0} is wrong. should be in"
                                          " the form, (070******) and between 10 and 13 "
-                                         "digits".format(request.json['contact']),
+                                         "digits".format(request.json['phone_number']),
                         "data": request.json}), 400
 
     @staticmethod
