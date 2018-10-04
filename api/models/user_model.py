@@ -48,6 +48,7 @@ class Users():
         """
         user = UsersModel(user_name, email, phone_number, password, user_type)
         self._database_.insert_user(user_name, email, phone_number, password, user_type)
+        del user.user_id
 
         return user
 
