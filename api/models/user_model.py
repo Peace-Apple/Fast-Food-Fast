@@ -1,6 +1,7 @@
 """
 Module for the user
 """
+
 from api.models.database import DatabaseConnection
 from werkzeug.security import generate_password_hash
 
@@ -46,7 +47,7 @@ class Users():
         :return:
         """
         user = UsersModel(user_name, email, phone_number, password, user_type)
-        self._database_.insert_user(self._table_, user.__dict__)
+        self._database_.insert_user(user_name, email, phone_number, password, user_type)
 
         return user
 
@@ -58,22 +59,11 @@ class Users():
         :return:
         """
         try:
-            return bcrypt.hashpw(password.encode("utf8"), bcrypt.gensalt(12))
+            return generate_password_hash(password, method='sha256')
         except ValueError:
             return False
 
-    @staticmethod
-    def verify_password(password_text, hashed):
-        """
-        verify client password with stored password
-        :param password_text:
-        :param hashed:
-        :return:
-        """
-        try:
-            return bcrypt.checkpw(password_text.encode('utf8'), hashed)
-        except ValueError:
-            return False
+
 
 
 

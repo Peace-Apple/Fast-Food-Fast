@@ -24,18 +24,18 @@ class DatabaseConnection:
         commands = (
             """
             CREATE TABLE IF NOT EXISTS "users" (
-                    user_id SERIAL PRIMARY KEY,
-                    user_name VARCHAR(25) NOT NULL,
-                    email VARCHAR(50) UNIQUE NOT NULL,
-                    phone_number INTEGER NOT NULL,
-                    user_type BOOLEAN NOT NULL DEFAULT FALSE,
-                    password VARCHAR(255) NOT NULL,
-                    is_loggedin BOOLEAN DEFAULT FALSE
+                    user_id SERIAL NOT NULL PRIMARY KEY,
+                    user_name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    phone_number VARCHAR(255) NOT NULL,
+                    user_type VARCHAR(100) NOT NULL,
+                    password VARCHAR(255) NOT NULL
+                  
                 )
             """,
             """
             CREATE TABLE IF NOT EXISTS "menu" (
-                    item_id SERIAL PRIMARY KEY, 
+                    item_id SERIAL NOT NULL PRIMARY KEY, 
                     item_name VARCHAR(50) NOT NULL, 
                     price INTEGER NOT NULL,
                     user_id INTEGER NOT NULL,
@@ -46,19 +46,20 @@ class DatabaseConnection:
             """,
             """
             CREATE TABLE IF NOT EXISTS "orders" (
-                    order_id SERIAL PRIMARY KEY, 
+                    order_id SERIAL NOT NULL PRIMARY KEY, 
                     user_id INTEGER NOT NULL,
-                    item_id INTEGER NOT NULL,
-                    order_item VARCHAR(50) NOT NULL, 
-                    order_status VARCHAR(25) NOT NULL DEFAULT 'New',
-                    quantity INTEGER NOT NULL,
                     FOREIGN KEY (user_id) REFERENCES "users" (user_id)
                     ON UPDATE CASCADE ON DELETE CASCADE,
+                    item_id INTEGER NOT NULL,
                     FOREIGN KEY (item_id) REFERENCES "menu" (item_id)
                     ON UPDATE CASCADE ON DELETE CASCADE,
-                    order_date TIMESTAMP DEFAULT NOW()
-                )
-            """)
+                    order_item VARCHAR(255) NOT NULL, 
+                    order_status VARCHAR(255) NOT NULL DEFAULT 'New',
+                    quantity INTEGER NOT NULL,
+                    order_date TIMESTAMP DEFAULT NOW() NOT NULL
+                    )
+            """
+        )
 
         try:
             for command in commands:
@@ -73,12 +74,11 @@ class DatabaseConnection:
                 self.connection.close()
 
 
-    def insert_user(self, user_name, email, phone_number, password):
-        password_hash = generate_password_hash(password, method='sha256')
-        add_user = "INSERT INTO users (user_name, email, phone_number, password)\
-        VALUES ('"+user_name+"', '"+email+"', '"+phone_number+"', '"+password_hash+"');"
+    def insert_user(self, user_name, email, phone_number, password, user_type):
+        add_user = "INSERT INTO users (user_name, email, phone_number, password, user_type)\
+        VALUES ('"+user_name+"', '"+email+"', '"+phone_number+"', '"+password+"', '"+user_type+"');"
         self.cursor.execute(add_user)
-        return "Account created"
+
 
     def insert_order(self, user_id, item_id ):
         add_order = "INSERT INTO orders (user_id, item_id)\
