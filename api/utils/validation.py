@@ -37,18 +37,6 @@ class DataValidation:
         return True
 
     @staticmethod
-    def validate_password(password, length) -> bool:
-        """
-        password validation
-        :param password:
-        :param length:
-        :return:
-        """
-        if length > len(password):
-            return False
-        return password.isalnum()
-
-    @staticmethod
     def validate_username(name):
         """
         Username validation

@@ -7,6 +7,7 @@ from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
 from api.models.user_model import Users
 from api.utils.validation import DataValidation
+from api.auth.authorise import Authenticate
 
 
 class SignupControl(MethodView):
@@ -34,23 +35,21 @@ class SignupControl(MethodView):
 
         if not user_name or not email or not phone_number or not password or not user_type:
             return ResponseErrors.empty_data_fields()
-        # elif not self.val.validate_password(password, 6):
-        #     return ResponseErrors.invalid_password()
         elif not self.val.validate_email(email):
             return ResponseErrors.invalid_email()
         elif not self.val.check_if_email_exists(email):
             return ResponseErrors.email_already_exists()
         elif not self.val.validate_phone(phone_number):
             return ResponseErrors.invalid_contact()
-        # elif not self.val.validate_username(user_name):
-        #     return ResponseErrors.invalid_name()
+        elif not self.val.validate_username(user_name):
+            return ResponseErrors.invalid_name()
         elif not self.val.check_if_user_name_exists(user_name):
             return ResponseErrors.username_already_exists()
         elif not self.val.validate_user_type(user_type):
             return ResponseErrors.invalid_user_type()
 
         user = self.myUser.register_user(user_name, email, phone_number,
-                                         Users.hash_password(password), user_type.lower())
+                                         Authenticate.hash_password(password), user_type.lower())
 
         del user.password
 

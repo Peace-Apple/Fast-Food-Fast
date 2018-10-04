@@ -75,13 +75,13 @@ class DatabaseConnection:
 
     def insert_user(self, user_name, email, phone_number, password, user_type):
         add_user = "INSERT INTO users (user_name, email, phone_number, password, user_type)" \
-                   " VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')".format(user_name, email, phone_number, password, user_type)
+                   "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')".format(user_name, email, phone_number, password, user_type)
         self.cursor.execute(add_user)
 
 
-    def insert_order(self, user_id, item_id ):
-        add_order = "INSERT INTO orders (user_id, item_id)"\
-                    "VALUES ('"+user_id+"','"+item_id+"')".format(user_id, item_id)
+    def insert_order(self, order_id, order_item, quantity):
+        add_order = "INSERT INTO orders (order_id, order_id, quantity)"\
+                    "VALUES ('{0}', '{1}', '{2}')".format(order_id, order_item, quantity)
         self.cursor.execute(add_order)
 
 
@@ -175,18 +175,6 @@ class DatabaseConnection:
         return check_item
 
 
-
-
-
-
-
-
-
-    def get_order_history(self):
-        pass
-
-    def update_order(self):
-        pass
 
 
 

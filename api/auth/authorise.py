@@ -52,7 +52,6 @@ class Authenticate:
             return 'Invalid token. Please log in again.'
 
     @staticmethod
-    @staticmethod
     def hash_password(password):
         """
         method to hash password

@@ -8,6 +8,7 @@ from api.utils.validation import DataValidation
 from api.handlers.response_errors import ResponseErrors
 from api.models.database import DatabaseConnection
 from api.auth.authorise import Authenticate
+from api.models.order_model import OrderModel
 
 
 class LoginControl(MethodView):
@@ -15,7 +16,7 @@ class LoginControl(MethodView):
     User login class with special methods to handle user login
     """
     myUser = DatabaseConnection()
-    # orders = OrderModel()
+    orders = OrderModel()
     val = DataValidation()
 
     def post(self):
@@ -35,16 +36,18 @@ class LoginControl(MethodView):
         if not user_name or not password:
             return ResponseErrors.empty_data_fields()
 
-        user_id = self.myUser.find_user_by_username('user_name')
-        password_hash = Authenticate.hash_password(password)
-        if user_id == True and password_hash == True:
+        user = self.myUser.find_user_by_username('user_name')
+
+        if user and self.auth.verify_password(password, user.password):
+            auth_token = self.auth.encode_auth_token(user.user_id)
+
 
             response_object = {
                 'status': 'success',
                 'message': 'You are logged in',
-                "access_token": create_access_token(identity=user_id),
-                'logged_in_as': user_id.user_type
-            }
+                "access_token": auth_token.decode(),
+                'logged_in_as': user
+                }
             return jsonify(response_object), 200
         else:
             response_object = {
@@ -53,34 +56,28 @@ class LoginControl(MethodView):
             }
             return jsonify(response_object), 404
 
+    def get(self):
+        """
+        Method to return the order history of a user
+        :return:
+            """
 
+        order_history = self.orders.order_history()
+        if order_history:
+            if isinstance(order_history, list):
+                response_object = {
+                    "status": "success",
+                    "data": [obj.__dict__ for obj in order_history]
+                        }
+                return jsonify(response_object), 200
+            elif isinstance(order_history, object):
 
-
-
-
-
-    # def get(self):
-    #     """
-    #     Method to return the order history of a user
-    #     :return:
-    #         """
-    #
-    #     order_history = self.OrderModel.order_history()
-    #     if order_history:
-    #         if isinstance(order_history, list):
-    #             response_object = {
-    #                 "status": "success",
-    #                 "data": [obj.__dict__ for obj in order_history]
-    #                     }
-    #             return jsonify(response_object), 200
-    #         elif isinstance(order_history, object):
-    #
-    #             response_object = {
-    #                 "status": "success",
-    #                 "data": [order_history.__dict__]
-    #                     }
-    #             return jsonify(response_object), 200
-    #         else:
-    #             return ResponseErrors.no_items('order')
+                response_object = {
+                    "status": "success",
+                    "data": [order_history.__dict__]
+                        }
+                return jsonify(response_object), 200
+            else:
+                return ResponseErrors.no_items('order')
 
 

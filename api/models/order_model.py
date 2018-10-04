@@ -16,7 +16,7 @@ class ApplicationData:
     def __init__(self, user_id=None, order_item=None, quantity=None):
         self.order_id = None
         self.user_id = user_id
-        self.quantity =quantity
+        self.quantity = quantity
         self.order_item = order_item
         self.order_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.item_id = None
@@ -27,8 +27,8 @@ class OrderModel:
     """
      Define token module attributes accessed by callers
      """
-    myTable = "orders"
-    myDatabase = DatabaseConnection()
+    _table_ = "orders"
+    _data_ = DatabaseConnection()
     menu = FoodItems()
 
     def make_order(self, user_id=None, order_item=None, quantity=None):
@@ -40,12 +40,12 @@ class OrderModel:
         :return:
         """
         order_data = ApplicationData(user_id, order_item, quantity)
-        menu_data = self.menu.find_item_by_name(order_item)
+        menu_data = self._data_.find_item_by_name(order_item)
         order_data.item_id = menu_data.item_id
 
         del order_data.order_id
 
-        DatabaseConnection().insert_order()
+        _data_.insert_order()
 
         return order_data.__dict__
 
