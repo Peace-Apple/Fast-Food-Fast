@@ -75,20 +75,20 @@ class DatabaseConnection:
 
 
     def insert_user(self, user_name, email, phone_number, password, user_type):
-        add_user = "INSERT INTO users (user_name, email, phone_number, password, user_type)\
-        VALUES ('"+user_name+"', '"+email+"', '"+phone_number+"', '"+password+"', '"+user_type+"');"
+        add_user = "INSERT INTO users (user_name, email, phone_number, password, user_type)" \
+                   " VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')".format(user_name, email, phone_number, password, user_type)
         self.cursor.execute(add_user)
 
 
     def insert_order(self, user_id, item_id ):
-        add_order = "INSERT INTO orders (user_id, item_id)\
-        VALUES (%s,%s);"
+        add_order = "INSERT INTO orders (user_id, item_id)"\
+                    "VALUES ('{0}','{1}')".format(user_id, item_id)
         self.cursor.execute(add_order)
 
 
-    def insert_menu_item(self):
-        add_item = "INSERT INTO menu (user_id, item_name)\
-        VALUES ('"+user_id+"','"+item_name+"');"
+    def insert_menu_item(self, user_id, item_name):
+        add_item = "INSERT INTO menu (user_id, item_name)"\
+                    "VALUES ('{0}', '{1}')" .format(user_id, item_name)
         self.cursor.execute(add_item)
 
     def get_all_users(self):
@@ -97,14 +97,14 @@ class DatabaseConnection:
         users = self.cursor.fetchall()
         return users
 
-    def get_a_specific_user(self):
-        specific_user = "SELECT * FROM users WHERE user_name = %s ", [user_id]
+    def get_a_specific_user(self, user_id):
+        specific_user = "SELECT * FROM users WHERE user_name = '{}'".format(user_id)
         self.cursor.execute(specific_user)
         user = self.cursor.fetchone()
         return user
 
-    def get_menu_items(self):
-        menu_item = "SELECT * FROM menu WHERE item_name = %s", [user_id]
+    def get_menu_items(self, user_id):
+        menu_item = "SELECT * FROM menu WHERE item_name ='{}'".format(user_id)
         self.cursor.execute(menu_item)
         menu = self.cursor.fetchone()
         return menu
@@ -115,8 +115,8 @@ class DatabaseConnection:
         orders = self.cursor.fetchall()
         return orders
 
-    def get_a_specific_order(self):
-        one = "SELECT * FROM orders WHERE order_item = %s", [order_id]
+    def get_a_specific_order(self, order_id):
+        one = "SELECT * FROM orders WHERE order_item = '{}'".format(order_id)
         self.cursor.execute(one)
         order = self.cursor.fetchone()
         return order

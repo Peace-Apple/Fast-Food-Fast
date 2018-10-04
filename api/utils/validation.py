@@ -1,7 +1,7 @@
 """
 Module to handle validation
 """
-import re
+import re #import regular expression
 
 from api.models.food_model import FoodItems
 from api.models.database import DatabaseConnection
