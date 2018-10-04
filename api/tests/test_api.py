@@ -1,5 +1,6 @@
-import unittest
-from signup_controllers import SignupControl
+# from unittest import TestCase
+# from user_model import UsersModel
+#
+# class TestUserRegistration(TestCase):
+#     def test_user_registration(self):
 
-class Tests(unittest.TestCase):
-    def test_signup_with_existing_email(self):
