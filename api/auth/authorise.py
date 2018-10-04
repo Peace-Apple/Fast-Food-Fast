@@ -4,6 +4,7 @@ Authentication module for JWT token
 import datetime
 
 import bcrypt
+
 import jwt
 
 from api.config.config import Config

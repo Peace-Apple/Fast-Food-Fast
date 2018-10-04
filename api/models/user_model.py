@@ -26,7 +26,7 @@ class UsersModel:
         self.user_id = None
 
 
-class Users():
+class Users:
     """
     Define user module attributes accessed by callers
     """
