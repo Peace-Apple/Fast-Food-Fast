@@ -42,7 +42,7 @@ class MenusController(MethodView):
         elif self.validate.check_item_name(self.food_item):
             return ResponseErrors.item_already_exists()
 
-        food_data = self.food.add_food_item(self.food_item.lower())
+        food_data = self.food.add_food_item(self.food_item.lower(), user_id)
 
         response_object = {
                 'status': 'success',

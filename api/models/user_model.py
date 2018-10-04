@@ -3,8 +3,6 @@ Module for the user
 """
 
 from api.models.database import DatabaseConnection
-from werkzeug.security import generate_password_hash
-
 
 class UsersModel:
     """
@@ -52,17 +50,7 @@ class Users():
 
         return user
 
-    @staticmethod
-    def hash_password(password):
-        """
-        method to hash password
-        :param password:
-        :return:
-        """
-        try:
-            return generate_password_hash(password, method='sha256')
-        except ValueError:
-            return False
+
 
 
 

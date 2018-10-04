@@ -40,3 +40,4 @@ class ProductionConfig(Config):
     """
     DEBUG = False
     TESTING = False
+    SECRET_KEY = 'pass123'

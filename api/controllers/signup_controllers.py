@@ -5,10 +5,9 @@ module to handle signup
 from flask import request, jsonify
 from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
-from api.models.database import DatabaseConnection
 from api.models.user_model import Users
 from api.utils.validation import DataValidation
-from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class SignupControl(MethodView):
     """

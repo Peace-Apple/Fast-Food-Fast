@@ -49,97 +49,97 @@ class OrderModel:
 
         return order_data.__dict__
 
-    # def get_orders(self):
-    #     """
-    #     Get all orders
-    #     :return:
-    #     """
-    #     response = DatabaseConnection().get_all_orders()
-    #
-    #     if response:
-    #         if isinstance(response, list) and len(response) > 1:
-    #             data = List[OrderModel] = []
-    #             for res in response:
-    #                 order_data = OrderModel(res['order_id'], res['order_item'], res['quantity'])
-    #                 order_data.item_id = res['item_id']
-    #                 order_data.order_id = res['order_id']
-    #                 order_data.order_date = res['order_date']
-    #                 order_data.order_status = res['order_status']
-    #
-    #                 del order_data.item_id
-    #                 data.append(order_data)
-    #             return data
-    #         elif isinstance(response, dict) or (isinstance(response, list) and len(response) == 1):
-    #             if isinstance(response, list):
-    #                 response = response[0]
-    #             order_data = OrderModel(response['order_id'], response['order_item'], response['quantity'])
-    #             order_data.item_id = response['item_id']
-    #             order_data.order_id = response['order_id']
-    #             order_data.order_date = response['order_date']
-    #             order_data.order_status = response['order_status']
-    #
-    #             del order_data.item_id
-    #             return order_data
-    #     return None
+    def get_orders(self):
+        """
+        Get all orders
+        :return:
+        """
+        response = DatabaseConnection().get_all_orders()
 
-    # def order_history(self, user_id):
-    #     """
-    #     Get order history of a user
-    #     :return:
-    #     """
-    #
-    #     response = DatabaseConnection().get_order_history()
-    #
-    #     if response:
-    #         if isinstance(response, list) and len(response) > 1:
-    #             data = List[OrderModel] = []
-    #             for res in response:
-    #                 order_data = OrderModel(res['order_id'], res['order_item'], res['quantity'])
-    #                 order_data.item_id = res['item_id']
-    #                 order_data.order_id = res['order_id']
-    #                 order_data.order_date = res['order_date']
-    #                 order_data.order_status = res['order_status']
-    #                 del order_data.item_id
-    #                 data.append(order_data)
-    #             return data
-    #         elif isinstance(response, dict) or (isinstance(response, list) and len(response) == 1):
-    #             if isinstance(response, list):
-    #                 response = response[0]
-    #             order_data = OrderModel(response['order_id'], response['order_item'], response['quantity'])
-    #             order_data.item_id = response['item_id']
-    #             order_data.order_id = response['order_id']
-    #             order_data.order_date = response['order_date']
-    #             order_data.order_status = response['order_status']
-    #             del order_data.item_id
-    #             return order_data
-    #     return None
+        if response:
+            if isinstance(response, list) and len(response) > 1:
+                data = List[OrderModel] = []
+                for res in response:
+                    order_data = OrderModel(res['order_id'], res['order_item'], res['quantity'])
+                    order_data.item_id = res['item_id']
+                    order_data.order_id = res['order_id']
+                    order_data.order_date = res['order_date']
+                    order_data.order_status = res['order_status']
 
-    # def find_one_order(self, order_id):
-    #     criteria = {'order_id': order_id}
-    #     res = DatabaseConnection().get_a_specific_order()
-    #     if res and isinstance(res, dict):
-    #         order_data = OrderModel(res['order_id'], res['order_item'], res['quantity'])
-    #         order_data.item_id = res['item_id']
-    #         order_data.order_id = res['order_id']
-    #         order_data.order_date = res['order_date']
-    #         order_data.order_status = res['order_status']
-    #         del order_data.item_id
-    #         return order_data
-    #     return None
+                    del order_data.item_id
+                    data.append(order_data)
+                return data
+            elif isinstance(response, dict) or (isinstance(response, list) and len(response) == 1):
+                if isinstance(response, list):
+                    response = response[0]
+                order_data = OrderModel(response['order_id'], response['order_item'], response['quantity'])
+                order_data.item_id = response['item_id']
+                order_data.order_id = response['order_id']
+                order_data.order_date = response['order_date']
+                order_data.order_status = response['order_status']
 
-    # def update_order(self, order_id, order_status):
-    #     selection = {
-    #         'order_id': order_id
-    #     }
-    #     new_update = {
-    #         'order_status': order_status
-    #     }
-    #     self.myDatabase.update_order(self.myTable, selection, new_update)
-    #     response_object = {
-    #         'status': 'success',
-    #         'message': 'Status has been updated'
-    #     }
-    #     return jsonify(response_object), 202
+                del order_data.item_id
+                return order_data
+        return None
+
+    def order_history(self, user_id):
+        """
+        Get order history of a user
+        :return:
+        """
+
+        response = DatabaseConnection().get_order_history()
+
+        if response:
+            if isinstance(response, list) and len(response) > 1:
+                data = List[OrderModel] = []
+                for res in response:
+                    order_data = OrderModel(res['order_id'], res['order_item'], res['quantity'])
+                    order_data.item_id = res['item_id']
+                    order_data.order_id = res['order_id']
+                    order_data.order_date = res['order_date']
+                    order_data.order_status = res['order_status']
+                    del order_data.item_id
+                    data.append(order_data)
+                return data
+            elif isinstance(response, dict) or (isinstance(response, list) and len(response) == 1):
+                if isinstance(response, list):
+                    response = response[0]
+                order_data = OrderModel(response['order_id'], response['order_item'], response['quantity'])
+                order_data.item_id = response['item_id']
+                order_data.order_id = response['order_id']
+                order_data.order_date = response['order_date']
+                order_data.order_status = response['order_status']
+                del order_data.item_id
+                return order_data
+        return None
+
+    def find_one_order(self, order_id):
+        criteria = {'order_id': order_id}
+        res = DatabaseConnection().get_a_specific_order()
+        if res and isinstance(res, dict):
+            order_data = OrderModel(res['order_id'], res['order_item'], res['quantity'])
+            order_data.item_id = res['item_id']
+            order_data.order_id = res['order_id']
+            order_data.order_date = res['order_date']
+            order_data.order_status = res['order_status']
+            del order_data.item_id
+            return order_data
+        return None
+
+    def update_order(self, order_id, order_status):
+        selection = {
+            'order_id': order_id
+        }
+        new_update = {
+            'order_status': order_status
+        }
+        self.myDatabase.update_order(self.myTable, selection, new_update)
+        response_object = {
+            'status': 'success',
+            'message': 'Status has been updated'
+        }
+        return jsonify(response_object), 202
 
 
 

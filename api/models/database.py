@@ -81,14 +81,15 @@ class DatabaseConnection:
 
     def insert_order(self, user_id, item_id ):
         add_order = "INSERT INTO orders (user_id, item_id)"\
-                    "VALUES ('{0}','{1}')".format(user_id, item_id)
+                    "VALUES ('"+user_id+"','"+item_id+"')".format(user_id, item_id)
         self.cursor.execute(add_order)
 
 
-    def insert_menu_item(self, item_id, user_id, item_name):
-        add_item = "INSERT INTO menu (item_id, user_id, item_name)"\
-                    "VALUES (%s, %s)"
-        self.cursor.execute(add_item, (item_name, item_id, user_id))
+    def insert_menu_item(self, item_id, item_name, user_id):
+        add_item = "INSERT INTO menu (item_id, item_name, user_id)"\
+                    "VALUES ('{0}', '{1}', '{2}')".format(item_id, item_name, user_id)
+        self.cursor.execute(add_item)
+
 
     def get_all_users(self):
         all_users = "SELECT * FROM users;"
@@ -105,15 +106,15 @@ class DatabaseConnection:
     def get_menu_items(self):
         menu_items = "SELECT * FROM menu"
         self.cursor.execute(menu_items)
-        items = self.cursor.fetchall()
-        return item
+        menu = self.cursor.fetchall()
+        return menu
 
 
     def get_one_menu_item(self, user_id):
         menu_item = "SELECT * FROM menu WHERE item_name ='{}'".format(user_id)
         self.cursor.execute(menu_item)
-        menu = self.cursor.fetchone()
-        return menu
+        item = self.cursor.fetchone()
+        return item
 
     def get_all_orders(self):
         all_orders = "SELECT * FROM orders;"
@@ -155,43 +156,43 @@ class DatabaseConnection:
         """
         find a specific user given a user id
         :param user_id:
-    #     :return:
-    #     """
-    #     user = "SELECT * FROM users WHERE user_id = '{}'".format(user_id)
-    #     self.cursor.execute(user)
-    #     check_id = self.cursor.fetchone()
-    #     return check_id
-    #
-    # def find_item_by_name(self, item_name):
-    #     """
-    #     Find a specific item given it's name
-    #     :param item_name:
-    #     :return:
-    #     """
-    #     item = "SELECT *FROM menu WHERE item_name ='{}'".format(item_name)
-    #     self.cursor.execute(item)
-    #     check_item = self.cursor.fetchone()
-    #     return check_item
-    #
-    #
-    #
-    #
-    #
-    #
-    #
-    #
-    #
-    # def get_order_history(self):
-    #     pass
-    #
-    # def update_order(self):
-    #     pass
-    #
-    #
-    #
-    #
-    #
-    #
+        :return:
+        """
+        user = "SELECT * FROM users WHERE user_id = '{}'".format(user_id)
+        self.cursor.execute(user)
+        check_id = self.cursor.fetchone()
+        return check_id
+
+    def find_item_by_name(self, item_name):
+        """
+        Find a specific item given it's name
+        :param item_name:
+        :return:
+        """
+        item = "SELECT *FROM menu WHERE item_name ='{}'".format(item_name)
+        self.cursor.execute(item)
+        check_item = self.cursor.fetchone()
+        return check_item
+
+
+
+
+
+
+
+
+
+    def get_order_history(self):
+        pass
+
+    def update_order(self):
+        pass
+
+
+
+
+
+
 
 
 

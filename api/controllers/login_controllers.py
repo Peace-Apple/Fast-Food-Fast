@@ -4,15 +4,10 @@ This module looks at the user login
 
 from flask import request, jsonify
 from flask.views import MethodView
-
-from api.models.order_model import OrderModel
 from api.utils.validation import DataValidation
 from api.handlers.response_errors import ResponseErrors
 from api.models.database import DatabaseConnection
-from api.models.user_model import Users
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
-from werkzeug.security import generate_password_hash, check_password_hash
-
+from api.auth.authorise import Authenticate
 
 
 class LoginControl(MethodView):
@@ -41,7 +36,7 @@ class LoginControl(MethodView):
             return ResponseErrors.empty_data_fields()
 
         user_id = self.myUser.find_user_by_username('user_name')
-        password_hash = Users.hash_password(password)
+        password_hash = Authenticate.hash_password(password)
         if user_id == True and password_hash == True:
 
             response_object = {
