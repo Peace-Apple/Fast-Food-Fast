@@ -10,9 +10,8 @@ class Config:
     This is the parent configurations to be inherited from
     """
     DEBUG = False
-    SECRET = os.getenv('SECRET')
     CSRF_ENABLED = True
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = "pass123"
 
 
 class DevelopmentConfig(Config):
@@ -21,7 +20,7 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     TESTING = True
-    SECRET_KEY = 'pass123'
+
     ENV = 'development'
 
 
