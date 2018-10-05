@@ -44,7 +44,7 @@ class TestFastFoodFast(TestCase):
             )),
             content_type="application/json"
         )
-        response_data = json.loads(register_user.data.decode())
+        response_data = json.loads(self.register_user.data.decode())
         self.assertTrue(response_data['status'] == "fail")
         self.assertTrue(response_data['error_message'] == "some of these fields are missing")
         self.assertTrue(response_data['data'])
