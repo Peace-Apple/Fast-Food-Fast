@@ -44,7 +44,7 @@ class Authenticate:
         """
 
         try:
-            payload = jwt.decode(auth_token, Config.SECRET_KEY)
+            payload = jwt.decode(auth_token, "apple")
 
             return payload['sub']
         except jwt.ExpiredSignatureError:
