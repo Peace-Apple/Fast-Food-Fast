@@ -75,10 +75,8 @@ class DatabaseConnection:
 
 
     def insert_user(self, user_name, email, phone_number, password, user_type):
-
-        hashed_password = generate_password_hash(password)
         add_user = """INSERT INTO users (user_name, email, phone_number, password, user_type)
-                   VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(user_name, email, phone_number, hashed_password, user_type)
+                   VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(user_name, email, phone_number, password, user_type)
         self.cursor.execute(add_user)
         return True
 
@@ -121,7 +119,6 @@ class DatabaseConnection:
         name = "SELECT * FROM users WHERE user_name ='{}'".format(user_name)
         self.cursor.execute(name)
         check_username = self.cursor.fetchone()
-        print(check_username)
         return check_username
 
     def find_user_by_email(self, email):
