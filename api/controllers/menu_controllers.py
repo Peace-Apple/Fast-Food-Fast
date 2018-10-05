@@ -3,12 +3,11 @@ Module to handle menu logic
 """
 from flask import request, jsonify
 from flask.views import MethodView
-
-
 from api.handlers.response_errors import ResponseErrors
 from api.models.food_model import FoodItems
 from api.utils.validation import DataValidation
 from api.auth.authorise import Authenticate
+from api.models.database import DatabaseConnection
 
 
 class MenusController(MethodView):
@@ -30,7 +29,7 @@ class MenusController(MethodView):
         if self.val.check_auth_header(auth_header):
             auth_token = self.val.check_auth_header(auth_header)
 
-            resp = self.auth.decode_auth_token(auth_token)
+            resp = Authenticate.decode_auth_token(auth_token)
 
             if not isinstance(resp, str):
 
@@ -54,7 +53,7 @@ class MenusController(MethodView):
                     elif self.validate.check_item_name(self.food_item):
                         return ResponseErrors.item_already_exists()
 
-                    food_data = self.food_model.add_food_item(self.food_item.lower(), resp)
+                    food_data = FoodItems.add_food_item(self.food_item.lower(), resp)
 
                     response_object = {
                         'status': 'success',
@@ -82,9 +81,9 @@ class MenusController(MethodView):
         if self.val.check_auth_header(auth_header):
             auth_token = self.val.check_auth_header(auth_header)
 
-            resp = self.auth.decode_auth_token(auth_token)
+            resp = Authenticate.decode_auth_token(auth_token)
             if not isinstance(resp, str):
-                menu_data = self.food_model.get_menu_items()
+                menu_data = DatabaseConnection().get_menu_items()
 
                 if menu_data:
                     if isinstance(menu_data, list) and len(menu_data) > 0:
