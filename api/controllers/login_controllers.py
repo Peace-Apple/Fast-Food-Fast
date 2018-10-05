@@ -51,7 +51,7 @@ class LoginControl(MethodView):
                 "access_token": str(Authenticate.encode_auth_token(user[0])),
                 'logged_in_as': str(user[1])
                 }
-            print(user[0])
+
             return jsonify(response_object), 200
 
         else:

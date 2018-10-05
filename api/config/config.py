@@ -20,7 +20,6 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     TESTING = True
-
     ENV = 'development'
 
 

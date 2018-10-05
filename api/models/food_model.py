@@ -27,7 +27,7 @@ class FoodItems:
     myTab = "menu"
     food = DatabaseConnection()
 
-    def add_food_item(self,item_id=None, item_name=None, user_id=None):
+    def add_food_item(self, item_id=None, item_name=None, user_id=None):
         """
         Add new food item to the menu
         :param item_id:
