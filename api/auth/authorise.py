@@ -2,14 +2,13 @@
 Authentication module for JWT token
 """
 import datetime
-
-import bcrypt
-
 import jwt
-
-from api.config.config import Config
+from flask import current_app
 from api.models.user_model import Users
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
+
 
 class Authenticate:
     """
@@ -30,7 +29,8 @@ class Authenticate:
                 'iat': datetime.datetime.utcnow(),
                 'sub': user_id
             }
-            val = jwt.encode(payload, Config.SECRET_KEY, algorithm='HS256')
+            val = jwt.encode(payload, "apple", algorithm='HS256')
+            print(val)
             return val
         except Exception as ex:
             return ex
@@ -60,7 +60,8 @@ class Authenticate:
         :return:
         """
         try:
-            return bcrypt.hashpw(password.encode("utf8"), bcrypt.gensalt(12))
+            return generate_password_hash(password, method="sha256")
+
         except ValueError:
             return False
 
@@ -72,7 +73,7 @@ class Authenticate:
         :param hashed:
         :return:
         """
-        try:
-            return bcrypt.checkpw(password_text.encode('utf8'), hashed)
-        except ValueError:
-            return False
+
+        return check_password_hash(hashed, password_text)
+
+
