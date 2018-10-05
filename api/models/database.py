@@ -174,6 +174,16 @@ class DatabaseConnection:
         check_item = self.cursor.fetchone()
         return check_item
 
+    def find_order_by_id(self, order_id):
+        """
+        find a specific user given an order id
+        :param order_id:
+        :return:
+        """
+        order = "SELECT * FROM orders WHERE order_id = '{}'".format(order_id)
+        self.cursor.execute(order)
+        check_id = self.cursor.fetchone()
+        return check_id
 
 
 

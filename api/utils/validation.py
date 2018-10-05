@@ -117,3 +117,13 @@ class DataValidation:
         if not username_regex.match(name):
             return False
         return True
+
+    @staticmethod
+    def check_auth_header(auth_header):
+        if auth_header:
+            try:
+                auth_token = auth_header.split(' ')[1]
+                return auth_token
+            except IndexError:
+                return None
+

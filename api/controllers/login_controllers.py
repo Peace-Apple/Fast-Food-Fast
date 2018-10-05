@@ -15,10 +15,11 @@ class LoginControl(MethodView):
     """
     User login class with special methods to handle user login
     """
-    myuser = DatabaseConnection()
-    orders = OrderModel()
-    val = DataValidation()
-    auth = Authenticate
+    def __init__(self):
+        self.my_user = DatabaseConnection()
+        self.orders = OrderModel()
+        self.val = DataValidation()
+        self.auth = Authenticate
 
     def post(self):
         # to get post data
@@ -37,9 +38,9 @@ class LoginControl(MethodView):
         if not user_name or not password:
             return ResponseErrors.empty_data_fields()
 
-        user = self.myuser.find_user_by_username(user_name)
+        user = self.my_user.find_user_by_username(user_name)
 
-        if user and self.auth.verify_password(password, user.password):
+        if user and self.auth.verify_password(user.password):
             auth_token = self.auth.encode_auth_token(user.user_id)
 
             response_object = {

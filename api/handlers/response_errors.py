@@ -148,6 +148,14 @@ class ResponseErrors:
         return jsonify(response_object), 200
 
     @staticmethod
+    def user_bearer_token_error():
+        response_object = {
+            'status': 'fail',
+            'message': 'Bearer token malformed'
+        }
+        return jsonify(response_object), 401
+
+    @staticmethod
     def order_item_absent():
         response_object = {
             'status': 'successful',
@@ -170,4 +178,18 @@ class ResponseErrors:
             "error_message": "Order status {} not found".format(order_status),
             "data": False}), 404
 
+    @staticmethod
+    def denied_permission():
+        response_object = {
+            'status': 'fail',
+            'message': 'Permission denied, Please Login as Admin'
+        }
+        return jsonify(response_object), 403
 
+    @staticmethod
+    def invalid_user_token(resp):
+        response_object = {
+            'status': 'fail',
+            'message': resp
+        }
+        return jsonify(response_object), 401

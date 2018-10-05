@@ -7,6 +7,7 @@ from api.handlers.response_errors import ResponseErrors
 from api.models.food_model import FoodItems
 from api.models.order_model import OrderModel
 from api.utils.validation import DataValidation
+from api.models.database import DatabaseConnection
 
 
 class OrdersController(MethodView):
@@ -15,10 +16,12 @@ class OrdersController(MethodView):
     """
 
     order_item = None
-    validate = DataValidation()
+    quantity = None
+    val = DataValidation()
     menu = FoodItems()
     orders = OrderModel()
-    quantity = None
+    myorder = DatabaseConnection()
+
 
     def post(self):
         """
@@ -26,33 +29,48 @@ class OrdersController(MethodView):
         :return:
          """
 
-        post_data = request.get_json()
+        # get auth_token
+        auth_header = request.headers.get('Authorization')
 
-        key = ('order_item', 'quantity')
+        if self.validate.check_auth_header(auth_header):
+            auth_token = self.validate.check_auth_header(auth_header)
 
-        if not set(key).issubset(set(post_data)):
-            return ResponseErrors.missing_fields(key)
+            resp = self.auth.decode_auth_token(auth_token)
 
-        try:
-            self.order_item = post_data['order_item'].strip()
-            self.quantity = post_data['quantity'].strip()
+            if not isinstance(resp, str):
+                post_data = request.get_json()
 
-        except AttributeError:
-            return ResponseErrors.invalid_data_format()
-        if not self.order_item:
-            return ResponseErrors.empty_data_fields()
-        elif not self.DataValidation.check_item_name(self.order_item):
-            return ResponseErrors.item_not_on_the_menu(self.order_item.lower())
+                key = ('order_item', 'quantity')
 
-        order = self.OrderModel.make_order(self.user_id, self.order_item.lower(), self.quantity)
+                if not set(key).issubset(set(post_data)):
+                    return ResponseErrors.missing_fields(key)
 
-        response_object = {
-            'status': 'success',
-            'message': 'Successfully posted an order',
-            'data': order.__dict__
+                try:
+                    self.order_item = post_data['order_item'].strip()
+                    self.quantity = post_data['quantity'].strip()
+                except AttributeError:
+                    return ResponseErrors.invalid_data_format()
+                if not self.quantity:
+                    self.quantity = "No quauntity specified"
+
+                if not self.order_item:
+                    return ResponseErrors.empty_data_fields()
+                elif not self.validate.check_item_name(self.order_item):
+                    return ResponseErrors.item_not_on_the_menu(self.order_item.lower())
+
+                order = self.orders.make_order(resp, self.order_item.lower(), self.quantity)
+
+                response_object = {
+                    'status': 'success',
+                    'message': 'Successfully posted an order',
+                    'data': order.__dict__
                 }
-        return jsonify(response_object), 201
+                return jsonify(response_object), 201
 
+            else:
+                return ResponseErrors.invalid_user_token(resp)
+        else:
+            return ResponseErrors.user_bearer_token_error()
 
     def get(self, order_id=None):
         """
@@ -60,26 +78,44 @@ class OrdersController(MethodView):
         :return:
         """
 
-        if order_id:
-            return self.get_single_order(order_id)
+        # get auth_token
+        auth_header = request.headers.get('Authorization')
+        if self.val.check_auth_header(auth_header):
+            auth_token = self.val.check_auth_header(auth_header)
 
-        current_orders = OrderModel().get_orders()
+            resp = self.auth.decode_auth_token(auth_token)
 
-        if current_orders:
-            if isinstance(current_orders, list) and len(current_orders) > 0:
-                response_object = {
-                    "status": "success",
-                    "data": [obj.__dict__ for obj in current_orders]
-                        }
-                return jsonify(response_object), 200
-            elif isinstance(current_orders, object):
-                response_object = {
-                    "status": "success",
-                    "data": [current_orders.__dict__]
-                        }
-                return jsonify(response_object), 200
+            if not isinstance(resp, str):
+
+                if self.val.check_user_type(resp):
+
+                    if order_id:
+                        return self.get_single_order(order_id)
+
+                    current_orders = self.orders.get_orders()
+
+                    if current_orders:
+                        if isinstance(current_orders, list) and len(current_orders) > 0:
+                            response_object = {
+                                "status": "success",
+                                "data": [obj.__dict__ for obj in current_orders]
+                            }
+                            return jsonify(response_object), 200
+                        elif isinstance(current_orders, object):
+
+                            response_object = {
+                                "status": "success",
+                                "data": [current_orders.__dict__]
+                            }
+                            return jsonify(response_object), 200
+                    else:
+                        return ResponseErrors.no_items('order')
+
+                return ResponseErrors.denied_permission()
             else:
-                return ResponseErrors.no_items('order')
+                return ResponseErrors.invalid_user_token(resp)
+        else:
+            return ResponseErrors.user_bearer_token_error()
 
     def get_single_order(self, order_id):
         """
@@ -87,7 +123,7 @@ class OrdersController(MethodView):
         :param order_id:
         :return:
         """
-        single_order = self.order.find_order_by_id(order_id)
+        single_order = self.myorder.find_order_by_id(order_id)
         if single_order:
             response_object = {
                 'status': 'success',
@@ -101,22 +137,40 @@ class OrdersController(MethodView):
         Method to update an order status
         :return:
         """
-        post_data = request.get_json()
 
-        key = "order_status"
+        # get auth_token
+        auth_header = request.headers.get('Authorization')
+        if self.val.check_auth_header(auth_header):
+            auth_token = self.val.check_auth_header(auth_header)
 
-        status = ['new', 'processing', 'cancelled', 'complete']
+            resp = self.auth.decode_auth_token(auth_token)
 
-        if key not in post_data:
-            return ResponseErrors.missing_fields(key)
-        try:
-            order_status = post_data['order_status'].strip()
-        except AttributeError:
-            return ResponseErrors.invalid_data_format()
-        if order_status.lower() not in status:
-            return ResponseErrors.order_status_not_found(order_status)
-        if self.order.find_order_by_id(order_id):
-            return self.orders.update_order(order_id, order_status)
-        return ResponseErrors.no_items('order')
+            if not isinstance(resp, str):
+                if self.val.check_user_type(resp):
+                    post_data = request.get_json()
+
+                    key = "order_status"
+
+                    status = ['new', 'processing', 'cancelled', 'completed']
+
+                    if key not in post_data:
+                        return ResponseErrors.missing_fields(key)
+                    try:
+                        order_status = post_data['order_status'].strip()
+                    except AttributeError:
+                        return ResponseErrors.invalid_data_format()
+
+                    if order_status.lower() not in status:
+                        return ResponseErrors.order_status_not_found(order_status)
+                    if self.myorder.find_order_by_id(order_id):
+                        return self.orders.update_order(order_id, order_status)
+                    return ResponseErrors.no_items('order')
+
+                return ResponseErrors.denied_permission()
+            else:
+                return ResponseErrors.invalid_user_token(resp)
+        else:
+            return ResponseErrors.user_bearer_token_error()
+
 
 
