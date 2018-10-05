@@ -6,20 +6,21 @@ from flask import request, jsonify
 from flask.views import MethodView
 from api.utils.validation import DataValidation
 from api.handlers.response_errors import ResponseErrors
-from api.models.database import DatabaseConnection
 from api.auth.authorise import Authenticate
 from api.models.order_model import OrderModel
+from api.models.database import DatabaseConnection
+from api.models.user_model import UsersModel
 
 
 class LoginControl(MethodView):
     """
     User login class with special methods to handle user login
     """
-    def __init__(self):
-        self.my_user = DatabaseConnection()
-        self.orders = OrderModel()
-        self.val = DataValidation()
-        self.auth = Authenticate
+    my_user = UsersModel()
+    my_db = DatabaseConnection()
+    val = DataValidation()
+    auth = Authenticate
+    orders = OrderModel()
 
     def post(self):
         # to get post data

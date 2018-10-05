@@ -30,8 +30,9 @@ class Users:
     """
     Define user module attributes accessed by callers
     """
-    _table_ = "user"
+    _table_ = "users"
     _database_ = DatabaseConnection()
+
 
     def register_user(self, user_name=None, email=None, phone_number=None,
                       password=None, user_type=None):
@@ -50,9 +51,6 @@ class Users:
         del user.user_id
 
         return user
-
-
-
 
 
 

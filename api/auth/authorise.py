@@ -60,7 +60,7 @@ class Authenticate:
         :return:
         """
         try:
-            return generate_password_hash(password, method='sha256')
+            return bcrypt.hashpw(password.encode("utf8"), bcrypt.gensalt(12))
         except ValueError:
             return False
 

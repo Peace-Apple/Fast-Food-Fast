@@ -3,6 +3,7 @@ Module to handle data storage
 """
 
 import psycopg2
+from werkzeug.security import generate_password_hash
 
 
 class DatabaseConnection:
@@ -74,21 +75,26 @@ class DatabaseConnection:
 
 
     def insert_user(self, user_name, email, phone_number, password, user_type):
-        add_user = "INSERT INTO users (user_name, email, phone_number, password, user_type)" \
-                   "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')".format(user_name, email, phone_number, password, user_type)
+
+        hashed_password = generate_password_hash(password)
+        add_user = """INSERT INTO users (user_name, email, phone_number, password, user_type)
+                   VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(user_name, email, phone_number, hashed_password, user_type)
         self.cursor.execute(add_user)
+        return True
 
 
     def insert_order(self, order_id, order_item, quantity):
-        add_order = "INSERT INTO orders (order_id, order_id, quantity)"\
-                    "VALUES ('{0}', '{1}', '{2}')".format(order_id, order_item, quantity)
+        add_order = """INSERT INTO orders (order_id, order_id, quantity)
+                    VALUES ('{0}', '{1}', '{2}');""".format(order_id, order_item, quantity)
         self.cursor.execute(add_order)
+        return True
 
 
     def insert_menu_item(self, item_id, item_name, user_id):
-        add_item = "INSERT INTO menu (item_id, item_name, user_id)"\
-                    "VALUES ('{0}', '{1}', '{2}')".format(item_id, item_name, user_id)
+        add_item = """INSERT INTO menu (item_id, item_name, user_id)
+                    "VALUES ('{0}', '{1}', '{2}');""".format(item_id, item_name, user_id)
         self.cursor.execute(add_item)
+        return True
 
 
     def get_all_users(self):
@@ -102,6 +108,9 @@ class DatabaseConnection:
         self.cursor.execute(specific_user)
         user = self.cursor.fetchone()
         return user
+
+
+
 
     def get_menu_items(self):
         menu_items = "SELECT * FROM menu"
@@ -128,40 +137,7 @@ class DatabaseConnection:
         order = self.cursor.fetchone()
         return order
 
-    def find_user_by_email(self, email):
-        """
-        find a specific user given an email
-        :param email:
-        :return:
-        """
-        email = "SELECT * FROM users WHERE email = '{}'".format(email)
-        self.cursor.execute(email)
-        check_email = self.cursor.fetchone()
-        return check_email
 
-    def find_user_by_username(self, user_name):
-        """
-        find a specific user given a user name
-        :return:
-        :param user_name:
-        :return:
-        """
-        name = "SELECT * FROM users WHERE user_name ='{}'".format(user_name)
-        self.cursor.execute(name)
-        check_username = self.cursor.fetchone()
-        return check_username
-
-
-    def find_user_by_id(self, user_id):
-        """
-        find a specific user given a user id
-        :param user_id:
-        :return:
-        """
-        user = "SELECT * FROM users WHERE user_id = '{}'".format(user_id)
-        self.cursor.execute(user)
-        check_id = self.cursor.fetchone()
-        return check_id
 
     def find_item_by_name(self, item_name):
         """
