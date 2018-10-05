@@ -7,9 +7,10 @@ from flask.views import MethodView
 from api.utils.validation import DataValidation
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authorise import Authenticate
+
 from api.models.order_model import OrderModel
 from api.models.database import DatabaseConnection
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class LoginControl(MethodView):
@@ -41,16 +42,16 @@ class LoginControl(MethodView):
         user = self.my_user.find_user_by_username(user_name)
 
         print(user)
-        if user and self.auth.verify_password(password, user[5].encode("utf8")):
-
-            auth_token = self.auth.encode_auth_token(user.user_id)
+        if user and Authenticate.verify_password(password, user[5]):
+            print(user[5])
 
             response_object = {
                 'status': 'success',
                 'message': 'You are logged in',
-                "access_token": auth_token.decode(),
-                'logged_in_as': user.user_type
+                "access_token": str(Authenticate.encode_auth_token(user[0])),
+                'logged_in_as': str(user[1])
                 }
+            print(user[0])
             return jsonify(response_object), 200
 
         else:
