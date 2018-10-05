@@ -41,8 +41,6 @@ class SignupControl(MethodView):
             return ResponseErrors.email_already_exists()
         elif not self.val.validate_phone(phone_number):
             return ResponseErrors.invalid_contact()
-        elif not self.val.validate_username(user_name):
-            return ResponseErrors.invalid_name()
         elif not self.val.check_if_user_name_exists(user_name):
             return ResponseErrors.username_already_exists()
         elif not self.val.validate_user_type(user_type):

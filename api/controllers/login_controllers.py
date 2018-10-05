@@ -9,15 +9,14 @@ from api.handlers.response_errors import ResponseErrors
 from api.auth.authorise import Authenticate
 from api.models.order_model import OrderModel
 from api.models.database import DatabaseConnection
-from api.models.user_model import UsersModel
+
 
 
 class LoginControl(MethodView):
     """
     User login class with special methods to handle user login
     """
-    my_user = UsersModel()
-    my_db = DatabaseConnection()
+    my_user = DatabaseConnection()
     val = DataValidation()
     auth = Authenticate
     orders = OrderModel()
@@ -41,7 +40,9 @@ class LoginControl(MethodView):
 
         user = self.my_user.find_user_by_username(user_name)
 
-        if user and self.auth.verify_password(user.password):
+        print(user)
+        if user and self.auth.verify_password(password, user[5].encode("utf8")):
+
             auth_token = self.auth.encode_auth_token(user.user_id)
 
             response_object = {
@@ -51,6 +52,7 @@ class LoginControl(MethodView):
                 'logged_in_as': user.user_type
                 }
             return jsonify(response_object), 200
+
         else:
             response_object = {
                 'status': 'fail',

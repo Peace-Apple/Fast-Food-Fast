@@ -110,7 +110,42 @@ class DatabaseConnection:
         return user
 
 
+    def find_user_by_username(self, user_name):
+        """
+        find a specific user given a user name
+        :return:
+        :param user_name:
+        :return:
+        """
 
+        name = "SELECT * FROM users WHERE user_name ='{}'".format(user_name)
+        self.cursor.execute(name)
+        check_username = self.cursor.fetchone()
+        print(check_username)
+        return check_username
+
+    def find_user_by_email(self, email):
+        """
+        find a specific user given an email
+        :param email:
+        :return:
+        """
+        email = "SELECT * FROM users WHERE email = '{}'".format(email)
+        self.cursor.execute(email)
+        check_email = self.cursor.fetchone()
+        return check_email
+
+
+    def find_user_by_id(self, user_id):
+        """
+        find a specific user given a user id
+        :param user_id:
+        :return:
+        """
+        user = "SELECT * FROM users WHERE user_id = '{}'".format(user_id)
+        self.cursor.execute(user)
+        check_id = self.cursor.fetchone()
+        return check_id
 
     def get_menu_items(self):
         menu_items = "SELECT * FROM menu"
