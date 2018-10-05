@@ -128,19 +128,7 @@ class TestFastFoodFast(TestCase):
         self.assertTrue(register.content_type == "application/json")
         self.assertEqual(register.status_code, 409)
 
-    def test_email_exists(self):
-        """
-        Test when the user name already exists
-        :return:
-        """
-        self.register_user('Arnold', 'arnold@gmail.com', '0706180672', 'qwerty', 'admin')
-        register = self.register_user('Katumba', 'arnold@gmail.com', '0706180672', 'qwerty', 'admin')
-        response_data = json.loads(register.data.decode())
-        self.assertTrue(response_data['status'] == "fail")
-        self.assertTrue(response_data['error_message'] == "email already exists")
-        self.assertFalse(response_data['data'])
-        self.assertTrue(register.content_type == "application/json")
-        self.assertEqual(register.status_code, 409)
+
 
 
 
