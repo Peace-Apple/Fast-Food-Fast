@@ -1,16 +1,13 @@
 """
 This module looks at the user login
 """
-
 from flask import request, jsonify
 from flask.views import MethodView
 from api.utils.validation import DataValidation
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authorise import Authenticate
-
 from api.models.order_model import OrderModel
 from api.models.database import DatabaseConnection
-from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class LoginControl(MethodView):
@@ -19,7 +16,7 @@ class LoginControl(MethodView):
     """
     my_user = DatabaseConnection()
     val = DataValidation()
-    auth = Authenticate
+    auth = Authenticate()
     orders = OrderModel()
 
     def post(self):
@@ -43,7 +40,6 @@ class LoginControl(MethodView):
 
         print(user)
         if user and Authenticate.verify_password(password, user[5]):
-            print(user[5])
 
             response_object = {
                 'status': 'success',
