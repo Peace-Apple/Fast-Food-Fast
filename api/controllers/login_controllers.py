@@ -1,6 +1,7 @@
 """
 This module looks at the user login
 """
+import datetime
 from flask import request, jsonify
 from flask.views import MethodView
 from api.utils.validation import DataValidation
@@ -8,6 +9,7 @@ from api.handlers.response_errors import ResponseErrors
 from api.auth.authorise import Authenticate
 from api.models.order_model import OrderModel
 from api.models.database import DatabaseConnection
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 class LoginControl(MethodView):
@@ -43,7 +45,7 @@ class LoginControl(MethodView):
             response_object = {
                 'status': '200',
                 'message': 'You are logged in',
-                "access_token": str(Authenticate.encode_auth_token(user[0])),
+                "access_token": create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=30)),
                 'logged_in_as': str(user[1])
                 }
 

@@ -1,9 +1,9 @@
 """
 Module to handle validation
 """
-import re #import regular expression
-
+import re
 from api.models.database import DatabaseConnection
+
 
 class DataValidation:
     """
@@ -11,7 +11,6 @@ class DataValidation:
     """
 
     data = DatabaseConnection()
-
 
     @staticmethod
     def validate_email(email) -> bool:
@@ -72,20 +71,8 @@ class DataValidation:
 
     @staticmethod
     def validate_user_type(user_type: str):
-        if user_type.lower() == "admin" or user_type.lower() == "client":
+        if user_type == "TRUE" or user_type == "FALSE":
             return True
-        return False
-
-    def check_user_type(self, user_id: int):
-        """
-        Check whether user is admin or not
-        :param user_id:
-        :return:
-        """
-        user_data = self.data.find_user_by_id(user_id)
-
-        if user_data.user_type == "admin":
-            return user_data
         return False
 
     @staticmethod
@@ -95,6 +82,7 @@ class DataValidation:
             return True
         except ValueError:
             return False
+
     def check_item_name(self, item_name: str):
         """
         Check if item exists already
@@ -117,12 +105,4 @@ class DataValidation:
             return False
         return True
 
-    @staticmethod
-    def check_auth_header(auth_header):
-        if auth_header:
-            try:
-                auth_token = auth_header.split(' ')[1]
-                return auth_token
-            except IndexError:
-                return None
 

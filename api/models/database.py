@@ -84,9 +84,9 @@ class DatabaseConnection:
         self.cursor.execute(add_order)
         return True
 
-    def insert_menu_item(self, item_name, user_id):
-        add_item = """INSERT INTO menu (item_name, user_id)
-                    "VALUES ('{0}', '{1}');""".format(item_name, user_id)
+    def insert_menu_item(self, item_name):
+        add_item = """INSERT INTO menu (item_name)
+                    VALUES ('{0}');""".format(item_name)
         self.cursor.execute(add_item)
         return True
 
@@ -132,7 +132,7 @@ class DatabaseConnection:
         :param user_id:
         :return:
         """
-        user = "SELECT * FROM users WHERE user_id = '{}'".format(user_id)
+        user = "SELECT * FROM users WHERE user_id = '{}'".format(user[0])
         self.cursor.execute(user)
         check_id = self.cursor.fetchone()
         return check_id
@@ -185,7 +185,7 @@ class DatabaseConnection:
         return check_id
 
     def check_admin(self):
-        self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 1")
+        self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 10")
 
 
 
