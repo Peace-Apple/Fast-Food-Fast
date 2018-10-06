@@ -74,8 +74,7 @@ class LoginControl(MethodView):
 
                 response_object = {
                     "status": "success",
-                    "data": [order_history.__dict__]
-                        }
+                }
                 return jsonify(response_object), 200
             else:
                 return ResponseErrors.no_items('order')
