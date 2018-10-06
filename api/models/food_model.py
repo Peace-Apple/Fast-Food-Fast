@@ -24,18 +24,17 @@ class FoodItems:
     Define food item module attributes accessed by callers
     """
 
-    myTab = "menu"
-    food = DatabaseConnection()
+    data = DatabaseConnection()
 
-    def add_food_item(self, item_id=None, item_name=None, user_id=None):
+    def add_food_item(self, item_name=None, user_id=None):
         """
         Add new food item to the menu
-        :param item_id:
         :param item_name:
         :param user_id:
         :return:
         """
-        menu_data = self.food.insert_menu_item(item_id, item_name, user_id)
+        menu_data = FoodModel(item_name, user_id)
+        self.data.insert_menu_item(item_name, user_id)
 
         del menu_data.item_id
 
