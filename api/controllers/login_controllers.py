@@ -38,24 +38,23 @@ class LoginControl(MethodView):
 
         user = self.my_user.find_user_by_username(user_name)
 
-        print(user)
         if user and Authenticate.verify_password(password, user[5]):
 
             response_object = {
-                'status': 'success',
+                'status': '200',
                 'message': 'You are logged in',
                 "access_token": str(Authenticate.encode_auth_token(user[0])),
                 'logged_in_as': str(user[1])
                 }
 
-            return jsonify(response_object), 200
+            return jsonify(response_object)
 
         else:
             response_object = {
-                'status': 'fail',
+                'status': '404',
                 'message': 'User does not exist.'
             }
-            return jsonify(response_object), 404
+            return jsonify(response_object)
 
     def get(self):
         """
