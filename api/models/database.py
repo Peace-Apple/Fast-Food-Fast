@@ -15,7 +15,6 @@ class DatabaseConnection:
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
 
-
     def create_tables(self):
         """
         This method creates tables one after the other in the database after the connection has been established.
@@ -29,7 +28,7 @@ class DatabaseConnection:
                     user_name VARCHAR(255) NOT NULL,
                     email VARCHAR(255) UNIQUE NOT NULL,
                     phone_number VARCHAR(255) NOT NULL,
-                    user_type VARCHAR(100) NOT NULL,
+                    user_type VARCHAR(100) DEFAULT 'FALSE',
                     password VARCHAR(255) NOT NULL
                   
                 )
@@ -73,13 +72,11 @@ class DatabaseConnection:
             if self.connection is not None:
                 self.connection.close()
 
-
-    def insert_user(self, user_name, email, phone_number, password, user_type):
-        add_user = """INSERT INTO users (user_name, email, phone_number, password, user_type)
-                   VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(user_name, email, phone_number, password, user_type)
+    def insert_user(self, user_name, email, phone_number, password):
+        add_user = """INSERT INTO users (user_name, email, phone_number, password)
+                   VALUES ('{0}', '{1}', '{2}', '{3}');""".format(user_name, email, phone_number, password)
         self.cursor.execute(add_user)
         return True
-
 
     def insert_order(self, order_id, order_item, quantity):
         add_order = """INSERT INTO orders (order_id, order_id, quantity)
@@ -87,13 +84,11 @@ class DatabaseConnection:
         self.cursor.execute(add_order)
         return True
 
-
-    def insert_menu_item(self, item_id, item_name, user_id):
-        add_item = """INSERT INTO menu (item_id, item_name, user_id)
-                    "VALUES ('{0}', '{1}', '{2}');""".format(item_id, item_name, user_id)
+    def insert_menu_item(self, item_name, user_id):
+        add_item = """INSERT INTO menu (item_name, user_id)
+                    "VALUES ('{0}', '{1}');""".format(item_name, user_id)
         self.cursor.execute(add_item)
         return True
-
 
     def get_all_users(self):
         all_users = "SELECT * FROM users;"
@@ -106,7 +101,6 @@ class DatabaseConnection:
         self.cursor.execute(specific_user)
         user = self.cursor.fetchone()
         return user
-
 
     def find_user_by_username(self, user_name):
         """
@@ -131,7 +125,6 @@ class DatabaseConnection:
         self.cursor.execute(email)
         check_email = self.cursor.fetchone()
         return check_email
-
 
     def find_user_by_id(self, user_id):
         """
@@ -169,8 +162,6 @@ class DatabaseConnection:
         order = self.cursor.fetchone()
         return order
 
-
-
     def find_item_by_name(self, item_name):
         """
         Find a specific item given it's name
@@ -193,7 +184,11 @@ class DatabaseConnection:
         check_id = self.cursor.fetchone()
         return check_id
 
+    def check_admin(self):
+        self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 1")
 
+
+DatabaseConnection().create_tables()
 
 
 
