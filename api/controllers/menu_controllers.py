@@ -57,11 +57,11 @@ class MenusController(MethodView):
                     food_data = self.food.add_food_item(self.food_item.lower(), resp)
 
                     response_object = {
-                        'status': 'success',
+                        'status': '201',
                         'message': 'Successfully added a new food item to the menu',
                         'data': food_data.__dict__
                     }
-                    return jsonify(response_object), 201
+                    return jsonify(response_object)
                 return ResponseErrors.denied_permission()
             else:
                 return ResponseErrors.invalid_user_token(resp)
