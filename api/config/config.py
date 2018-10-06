@@ -2,15 +2,13 @@
 App configurations
 """
 
-import os
-
 
 class Config:
     """
     This is the parent configurations to be inherited from
     """
     DEBUG = False
-    CSRF_ENABLED = True
+    TESTING = False
     SECRET_KEY = "pass123"
 
 
@@ -21,6 +19,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     TESTING = True
     ENV = 'development'
+    SECRET_KEY = 'pass123'
 
 
 class TestingConfig(Config):
@@ -32,10 +31,4 @@ class TestingConfig(Config):
     SECRET_KEY = 'pass123'
 
 
-class ProductionConfig(Config):
-    """
-    Extra configuration for Production
-    """
-    DEBUG = False
-    TESTING = False
-    SECRET_KEY = 'pass123'
+
