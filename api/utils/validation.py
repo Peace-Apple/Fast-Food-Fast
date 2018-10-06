@@ -3,7 +3,6 @@ Module to handle validation
 """
 import re #import regular expression
 
-from api.models.food_model import FoodItems
 from api.models.database import DatabaseConnection
 
 class DataValidation:
@@ -11,7 +10,7 @@ class DataValidation:
     Class has methods to handle validation of data
     """
 
-    mydata = DatabaseConnection()
+    data = DatabaseConnection()
 
 
     @staticmethod
@@ -32,7 +31,7 @@ class DataValidation:
         :param email:
         :return:
         """
-        if self.mydata.find_user_by_email(email):
+        if self.data.find_user_by_email(email):
             return False
         return True
 
@@ -54,7 +53,7 @@ class DataValidation:
         :param username:
         :return:
         """
-        if self.mydata.find_user_by_username(username):
+        if self.data.find_user_by_username(username):
             return False
         return True
 
@@ -83,7 +82,7 @@ class DataValidation:
         :param user_id:
         :return:
         """
-        user_data = self.mydata.find_user_by_id(user_id)
+        user_data = self.data.find_user_by_id(user_id)
 
         if user_data.user_type == "admin":
             return user_data
@@ -102,7 +101,7 @@ class DataValidation:
         :param item_name:
         :return:
         """
-        if self.mydata.find_item_by_name(item_name):
+        if self.data.find_item_by_name(item_name):
             return True
         return False
 
