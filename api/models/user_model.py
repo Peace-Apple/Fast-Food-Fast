@@ -30,7 +30,6 @@ class Users:
     """
     Define user module attributes accessed by callers
     """
-    _table_ = "users"
     _database_ = DatabaseConnection()
 
 
