@@ -17,7 +17,7 @@ class MenusController(MethodView):
     food_item = None
     val = DataValidation()
     food = FoodItems()
-    auth = Authenticate
+    auth = Authenticate()
 
     def post(self):
         """
@@ -26,6 +26,7 @@ class MenusController(MethodView):
         """
         # get auth_token
         auth_header = request.headers.get('Authorization')
+
         if self.val.check_auth_header(auth_header):
             auth_token = self.val.check_auth_header(auth_header)
 
@@ -48,12 +49,12 @@ class MenusController(MethodView):
 
                     if not self.food_item:
                         return ResponseErrors.empty_data_fields()
-                    elif not self.validate.validate_name(self.food_item):
+                    elif not self.val.validate_name(self.food_item):
                         return ResponseErrors.invalid_name()
-                    elif self.validate.check_item_name(self.food_item):
+                    elif self.val.check_item_name(self.food_item):
                         return ResponseErrors.item_already_exists()
 
-                    food_data = FoodItems.add_food_item(self.food_item.lower(), resp)
+                    food_data = self.food.add_food_item(self.food_item.lower(), resp)
 
                     response_object = {
                         'status': 'success',
