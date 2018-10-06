@@ -21,7 +21,7 @@ class SignupControl(MethodView):
 
         post_data = request.get_json()
 
-        keys = ("user_name", "email", "phone_number", "password", "user_type")
+        keys = ("user_name", "email", "phone_number", "password")
         if not set(keys).issubset(set(post_data)):
             return ResponseErrors.missing_fields(keys)
         try:
@@ -29,11 +29,11 @@ class SignupControl(MethodView):
             email = post_data.get('email').strip()
             phone_number = post_data.get('phone_number').strip()
             password = post_data.get('password').strip()
-            user_type = post_data.get('user_type').strip()
+
         except AttributeError:
             return ResponseErrors.invalid_data_format()
 
-        if not user_name or not email or not phone_number or not password or not user_type:
+        if not user_name or not email or not phone_number or not password:
             return ResponseErrors.empty_data_fields()
         elif not self.val.validate_email(email):
             return ResponseErrors.invalid_email()
@@ -43,17 +43,14 @@ class SignupControl(MethodView):
             return ResponseErrors.invalid_contact()
         elif not self.val.check_if_user_name_exists(user_name):
             return ResponseErrors.username_already_exists()
-        elif not self.val.validate_user_type(user_type):
-            return ResponseErrors.invalid_user_type()
 
         user = self.myUser.register_user(user_name, email, phone_number,
-                                         Authenticate.hash_password(password), user_type.lower())
+                                         Authenticate.hash_password(password))
 
         del user.password
 
         response_object = {
-            'status': 'success',
-            'message': 'Successfully registered',
-            'data': user.__dict__
-                }
-        return jsonify(response_object), 201
+            'status': '200',
+            'message': 'Successfully registered'
+            }
+        return jsonify(response_object)
