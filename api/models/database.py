@@ -188,6 +188,7 @@ class DatabaseConnection:
         self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 1")
 
 
+
 DatabaseConnection().create_tables()
 
 
