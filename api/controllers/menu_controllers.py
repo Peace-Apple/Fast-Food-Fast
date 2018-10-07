@@ -8,7 +8,7 @@ from api.models.food_model import FoodItems
 from api.utils.validation import DataValidation
 from api.auth.authorise import Authenticate
 from api.models.database import DatabaseConnection
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class MenusController(MethodView):
@@ -19,6 +19,7 @@ class MenusController(MethodView):
     val = DataValidation()
     food = FoodItems()
     auth = Authenticate()
+    data = DatabaseConnection()
 
     @jwt_required
     def post(self):
@@ -53,9 +54,9 @@ class MenusController(MethodView):
             food_data = self.food.add_food_item(self.item_name.lower(), str(user_id))
 
             response_object = {
-                'status': '201',
+                'status': '200',
                 'message': 'Successfully added a new food item to the menu',
-                'data': food_data.__dict__
+                'data': food_data
                 }
             return jsonify(response_object)
         return ResponseErrors.denied_permission()
@@ -66,22 +67,18 @@ class MenusController(MethodView):
         :return:
         """
 
-        menu_data = DatabaseConnection().get_menu_items()
+        menu_data = self.data.get_menu_items()
 
         if menu_data:
-            if isinstance(menu_data, list) and len(menu_data) > 0:
-                response_object = {
-                    "status": "successful",
-                    "data": [obj.__dict__ for obj in menu_data]
-                    }
-                return jsonify(response_object), 200
-            elif isinstance(menu_data, object):
+
+            if isinstance(menu_data, object):
 
                 response_object = {
-                    "status": "successful",
-                    "data": [menu_data.__dict__]
+                    "msg": "successful",
+                    "status": "200",
+                    "data": menu_data
                     }
-                return jsonify(response_object), 200
-            else:
-                return ResponseErrors.no_items('menu')
+                return jsonify(response_object)
+        else:
+            return ResponseErrors.no_items('menu')
 
