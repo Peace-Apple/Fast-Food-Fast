@@ -83,7 +83,7 @@ class DataValidation:
         except ValueError:
             return False
 
-    def check_item_name(self, item_name: str):
+    def check_item_name(self, item_name):
         """
         Check if item exists already
         :param item_name:
