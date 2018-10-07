@@ -84,9 +84,8 @@ class DatabaseConnection:
         self.cursor.execute(add_order)
         return True
 
-    def insert_menu_item(self, item_name):
-        add_item = """INSERT INTO menu (item_name)
-                    VALUES ('{0}');""".format(item_name)
+    def insert_menu_item(self, item_name, user_id):
+        add_item = "INSERT INTO menu (item_name, user_id) VALUES ('"+item_name+"', '"+user_id+"');"
         self.cursor.execute(add_item)
         return True
 
@@ -142,7 +141,6 @@ class DatabaseConnection:
         self.cursor.execute(menu_items)
         menu = self.cursor.fetchall()
         return menu
-
 
     def get_one_menu_item(self, user_id):
         menu_item = "SELECT * FROM menu WHERE item_name ='{}'".format(user_id)
