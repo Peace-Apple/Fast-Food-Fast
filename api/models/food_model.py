@@ -35,7 +35,7 @@ class FoodItems:
         :return:
         """
         menu_data = FoodModel(item_name, user_id)
-        self.data.insert_menu_item(item_name)
+        self.data.insert_menu_item(item_name, user_id)
 
         del menu_data.item_id
 
