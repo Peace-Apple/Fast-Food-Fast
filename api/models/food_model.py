@@ -3,7 +3,6 @@ Module for food item models
 """
 
 from api.models.database import DatabaseConnection
-from flask_jwt_extended import jwt_required, jwt_manager, create_access_token,get_jwt_identity
 
 
 class FoodModel:
@@ -34,12 +33,10 @@ class FoodItems:
         :param user_id:
         :return:
         """
-        menu_data = FoodModel(item_name, user_id)
-        self.data.insert_menu_item(item_name, user_id)
 
-        del menu_data.item_id
+        menu_data = self.data.insert_menu_item(item_name, user_id)
 
-        return menu_data.__dict__
+        return menu_data
 
 
 
