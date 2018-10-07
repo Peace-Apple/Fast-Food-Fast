@@ -78,9 +78,9 @@ class DatabaseConnection:
         self.cursor.execute(add_user)
         return True
 
-    def insert_order(self, order_id, order_item, quantity):
-        add_order = """INSERT INTO orders (order_id, order_id, quantity)
-                    VALUES ('{0}', '{1}', '{2}');""".format(order_id, order_item, quantity)
+    def insert_order(self, order_item, quantity, user_id, item_id):
+        add_order = """INSERT INTO orders (order_item, quantity, user_id, item_id)
+                    VALUES ('{0}', '{1}', '{2}', '{3}');""".format(order_item, quantity, user_id, item_id)
         self.cursor.execute(add_order)
         return True
 
@@ -131,7 +131,7 @@ class DatabaseConnection:
         :param user_id:
         :return:
         """
-        user = "SELECT * FROM users WHERE user_id = '{}'".format(user[0])
+        user = "SELECT * FROM users WHERE user_id = '{}'".format(user_id)
         self.cursor.execute(user)
         check_id = self.cursor.fetchone()
         return check_id
@@ -142,8 +142,8 @@ class DatabaseConnection:
         menu = self.cursor.fetchall()
         return menu
 
-    def get_one_menu_item(self, user_id):
-        menu_item = "SELECT * FROM menu WHERE item_name ='{}'".format(user_id)
+    def get_one_menu_item(self, item_id):
+        menu_item = "SELECT * FROM menu WHERE item_name ='{}'".format(item_id)
         self.cursor.execute(menu_item)
         item = self.cursor.fetchone()
         return item
@@ -155,7 +155,7 @@ class DatabaseConnection:
         return orders
 
     def get_a_specific_order(self, order_id):
-        one = "SELECT * FROM orders WHERE order_item = '{}'".format(order_id)
+        one = "SELECT * FROM orders WHERE order_id = '{}'".format(order_id)
         self.cursor.execute(one)
         order = self.cursor.fetchone()
         return order
@@ -181,6 +181,11 @@ class DatabaseConnection:
         self.cursor.execute(order)
         check_id = self.cursor.fetchone()
         return check_id
+
+    def update_order(self, order_status, order_id):
+        update = "UPDATE orders SET order_status = '{}' WHERE order_id = '{}';"
+        self.cursor.execute(update(order_status, order_id))
+
 
     def check_admin(self):
         self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 10")
