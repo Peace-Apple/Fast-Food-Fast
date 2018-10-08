@@ -51,7 +51,7 @@ class MenusController(MethodView):
             elif self.val.check_item_name(self.item_name):
                 return ResponseErrors.item_already_exists()
 
-            food_data = self.food.add_food_item(self.item_name.lower(), str(user_id))
+            food_data = self.food.add_food_item(self.item_name, str(user_id))
 
             response_object = {
                 'status': '200',
@@ -61,15 +61,19 @@ class MenusController(MethodView):
             return jsonify(response_object)
         return ResponseErrors.denied_permission()
 
+    @jwt_required
     def get(self):
         """
         Method to return existing menu items
         :return:
         """
+        user = get_jwt_identity()
+        user_type = user[4]
+        user_id = user[0]
 
-        menu_data = self.data.get_menu_items()
+        if user_type == "FALSE" and user_id:
 
-        if menu_data:
+            menu_data = self.data.get_menu_items()
 
             if isinstance(menu_data, object):
 
@@ -79,6 +83,6 @@ class MenusController(MethodView):
                     "data": menu_data
                     }
                 return jsonify(response_object)
-        else:
-            return ResponseErrors.no_items('menu')
+            else:
+                return ResponseErrors.no_items('menu')
 

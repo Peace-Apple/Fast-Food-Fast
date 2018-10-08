@@ -45,7 +45,7 @@ class LoginControl(MethodView):
             response_object = {
                 'status': '200',
                 'message': 'You are logged in',
-                "access_token": create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=30)),
+                "access_token": create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=3600)),
                 'logged_in_as': str(user[1])
                 }
 

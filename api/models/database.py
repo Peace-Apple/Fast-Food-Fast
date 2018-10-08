@@ -137,7 +137,7 @@ class DatabaseConnection:
         return check_id
 
     def get_menu_items(self):
-        menu_items = "SELECT * FROM menu"
+        menu_items = "SELECT * FROM menu;"
         self.cursor.execute(menu_items)
         menu = self.cursor.fetchall()
         return menu
@@ -166,7 +166,7 @@ class DatabaseConnection:
         :param item_name:
         :return:
         """
-        item = "SELECT *FROM menu WHERE item_name ='{}'".format(item_name)
+        item = "SELECT * FROM menu WHERE item_name ='{}'".format(item_name)
         self.cursor.execute(item)
         check_item = self.cursor.fetchone()
         return check_item

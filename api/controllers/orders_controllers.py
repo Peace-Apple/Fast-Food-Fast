@@ -33,6 +33,7 @@ class OrdersController(MethodView):
         user = get_jwt_identity()
         user_type = user[4]
         user_id = user[0]
+        item_id = user[0]
 
         if user_type != "TRUE" and user_id:
 
@@ -51,9 +52,9 @@ class OrdersController(MethodView):
             if not self.order_item or not self.quantity:
                 return ResponseErrors.empty_data_fields()
             elif not self.val.check_item_name(self.order_item):
-                return ResponseErrors.item_not_on_the_menu(self.order_item.lower())
+                return ResponseErrors.item_not_on_the_menu(self.order_item)
 
-            order = self.orders.make_order(self.order_item.lower(), self.quantity, str(user_id), str(item_id))
+            order = self.orders.make_order(self.order_item, self.quantity, str(user_id), str(item_id))
 
             response_object = {
                 'status': '201',
