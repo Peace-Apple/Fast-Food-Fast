@@ -30,17 +30,17 @@ class OrderModel:
     data = DatabaseConnection()
     food = FoodItems()
 
-    def make_order(self, user_id=None, item_id=None, order_item=None, quantity=None):
+    def make_order(self, order_item=None, quantity=None, user_id=None, item_id=None):
         """
         Make new order
-        :param user_id:
-        :param item_id:
         :param order_item:
         :param quantity:
+        :param user_id:
+        :param item_id:
         :return:
         """
 
-        order_data = self.data.insert_order(user_id, item_id, order_item, quantity)
+        order_data = self.data.insert_order(order_item, quantity, user_id, item_id)
 
         return order_data
 
