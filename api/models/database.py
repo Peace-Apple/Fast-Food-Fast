@@ -3,7 +3,6 @@ Module to handle data storage
 """
 
 import psycopg2
-from werkzeug.security import generate_password_hash
 
 
 class DatabaseConnection:
@@ -143,7 +142,7 @@ class DatabaseConnection:
         return menu
 
     def get_one_menu_item(self, item_id):
-        menu_item = "SELECT * FROM menu WHERE item_name ='{}'".format(item_id)
+        menu_item = "SELECT * FROM menu WHERE item_id ='{}'".format(item_id)
         self.cursor.execute(menu_item)
         item = self.cursor.fetchone()
         return item
@@ -155,7 +154,7 @@ class DatabaseConnection:
         return orders
 
     def get_a_specific_order(self, order_id):
-        one = "SELECT * FROM orders WHERE order_id = '{}'".format(order_id)
+        one = """"SELECT * FROM orders WHERE order_id = '{0}'""".format(order_id)
         self.cursor.execute(one)
         order = self.cursor.fetchone()
         return order
