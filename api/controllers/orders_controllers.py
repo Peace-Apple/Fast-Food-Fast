@@ -51,8 +51,8 @@ class OrdersController(MethodView):
                 return ResponseErrors.invalid_data_format()
             if not self.order_item or not self.quantity:
                 return ResponseErrors.empty_data_fields()
-            elif not self.val.check_item_name(self.order_item):
-                return ResponseErrors.item_not_on_the_menu(self.order_item)
+            # elif not self.val.check_item_name(self.order_item):
+            #     return ResponseErrors.item_not_on_the_menu(self.order_item)
 
             order = self.orders.make_order(self.order_item, self.quantity, str(user_id), str(item_id))
 
@@ -105,12 +105,12 @@ class OrdersController(MethodView):
 
         if user_type == "TRUE" and user_id:
 
-            single_order = self.data.get_a_specific_order(order_id)
+            single_order = self.data.get_a_specific_order(str(order_id))
             if single_order:
                 response_object = {
                     'status': '200',
                     'msg': 'success',
-                    'data': single_order.__dict__
+                    'data': single_order
                 }
                 return jsonify(response_object)
             return ResponseErrors.no_order()
