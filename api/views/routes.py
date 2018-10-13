@@ -32,7 +32,7 @@ class Urls:
                          methods=['GET'], strict_slashes=False)
         app.add_url_rule('/api/v2/orders/<int:order_id>/', view_func=OrdersController.as_view('get_a_specific_order'),
                          methods=['GET'], strict_slashes=False)
-        app.add_url_rule('/api/v2/orders/<int:order_id>/', view_func=OrdersController.as_view('update_order_status'),
+        app.add_url_rule('/api/v2/orders/<int:order_id>/', view_func=OrdersController.as_view('update_order'),
                          methods=['PUT'], strict_slashes=False)
         app.add_url_rule('/api/v2/menu/', view_func=MenusController.as_view('get_menu_items'),
                          methods=['GET'], strict_slashes=False)
