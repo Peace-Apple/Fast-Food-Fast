@@ -1,5 +1,5 @@
 """
-module to handle signup
+module to handle signup of the user
 """
 
 from flask import request, jsonify
@@ -50,7 +50,7 @@ class SignupControl(MethodView):
         del user.password
 
         response_object = {
-            'status': '200',
+            'status': '201',
             'message': 'Successfully registered'
             }
         return jsonify(response_object)
