@@ -85,4 +85,5 @@ class MenusController(MethodView):
                 return jsonify(response_object)
             else:
                 return ResponseErrors.no_items('menu')
+        return ResponseErrors.denied_permission()
 
