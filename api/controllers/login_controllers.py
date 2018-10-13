@@ -7,19 +7,17 @@ from flask.views import MethodView
 from api.utils.validation import DataValidation
 from api.handlers.response_errors import ResponseErrors
 from api.auth.authorise import Authenticate
-from api.models.order_model import OrderModel
 from api.models.database import DatabaseConnection
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 class LoginControl(MethodView):
     """
-    User login class with special methods to handle user login
+    User login class
     """
-    my_user = DatabaseConnection()
+    data = DatabaseConnection()
     val = DataValidation()
     auth = Authenticate()
-    orders = OrderModel()
 
     def post(self):
         # to get post data
@@ -38,7 +36,7 @@ class LoginControl(MethodView):
         if not user_name or not password:
             return ResponseErrors.empty_data_fields()
 
-        user = self.my_user.find_user_by_username(user_name)
+        user = self.data.find_user_by_username(user_name)
 
         if user and Authenticate.verify_password(password, user[5]):
 
@@ -58,27 +56,30 @@ class LoginControl(MethodView):
             }
             return jsonify(response_object)
 
+    @jwt_required
     def get(self):
         """
         Method to return the order history of a user
         :return:
             """
 
-        order_history = self.orders.order_history()
-        if order_history:
-            if isinstance(order_history, list):
-                response_object = {
-                    "status": "success",
-                    "data": [obj.__dict__ for obj in order_history]
-                        }
-                return jsonify(response_object), 200
-            elif isinstance(order_history, object):
+        user = get_jwt_identity()
+        user_type = user[4]
+        user_id = user[0]
+
+        if user_type == "FALSE" and user_id:
+
+            order_history = self.data.get_order_history(user_id)
+            if isinstance(order_history, object):
 
                 response_object = {
-                    "status": "success",
+                    "status": "200",
+                    "msg": "success",
+                    "data": order_history
                 }
-                return jsonify(response_object), 200
+                return jsonify(response_object)
             else:
                 return ResponseErrors.no_items('order')
+        return ResponseErrors.denied_permission()
 
 
