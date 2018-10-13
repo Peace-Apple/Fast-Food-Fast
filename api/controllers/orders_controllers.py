@@ -33,7 +33,6 @@ class OrdersController(MethodView):
         user = get_jwt_identity()
         user_type = user[4]
         user_id = user[0]
-        item_id = user[0]
 
         if user_type != "TRUE" and user_id:
 
@@ -51,19 +50,21 @@ class OrdersController(MethodView):
                 return ResponseErrors.invalid_data_format()
             if not self.order_item or not self.quantity:
                 return ResponseErrors.empty_data_fields()
-            # elif not self.val.check_item_name(self.order_item):
-            #     return ResponseErrors.item_not_on_the_menu(self.order_item)
+            elif not self.val.check_item_name(self.order_item):
+                return ResponseErrors.item_not_on_the_menu(self.order_item)
 
-            order = self.orders.make_order(self.order_item, self.quantity, str(user_id), str(item_id))
+            item = self.data.find_item_by_name(self.order_item)
 
-            response_object = {
-                'status': '201',
-                'message': 'Successfully posted an order',
-                'data': order
-                }
-            return jsonify(response_object)
-        else:
-            return ResponseErrors.denied_permission()
+            order = self.orders.make_order(self.order_item, self.quantity, str(user_id), str(item[0]))
+
+            if item and order:
+                response_object = {
+                    'status': '201',
+                    'message': 'Successfully posted an order',
+                    'data': order
+                    }
+                return jsonify(response_object)
+        return ResponseErrors.denied_permission()
 
     @jwt_required
     def get(self):
