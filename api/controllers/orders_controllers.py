@@ -93,7 +93,7 @@ class OrdersController(MethodView):
         return ResponseErrors.denied_permission()
 
     @jwt_required
-    def get_single_order(self, order_id):
+    def get(self, order_id):
         """
         method to return a specific order
         :param order_id:
@@ -105,15 +105,20 @@ class OrdersController(MethodView):
 
         if user_type == "TRUE" and user_id:
 
-            single_order = self.data.get_a_specific_order(str(order_id))
-            if single_order:
+            single_order = self.data.get_a_specific_order(order_id)
+
+            if isinstance(single_order, object):
                 response_object = {
                     'status': '200',
                     'msg': 'success',
                     'data': single_order
                 }
                 return jsonify(response_object)
-            return ResponseErrors.no_order()
+
+            else:
+                return ResponseErrors.no_order()
+
+        return ResponseErrors.denied_permission()
 
     @jwt_required
     def put(self, order_id):
@@ -140,12 +145,12 @@ class OrdersController(MethodView):
             except AttributeError:
                 return ResponseErrors.invalid_data_format()
 
-            if order_status.lower() not in status:
+            if order_status not in status:
                 return ResponseErrors.order_status_not_found(order_status)
             if self.data.find_order_by_id(order_id):
 
-                updated_order = self.data.update_order(order_id, order_status)
-                if updated_order:
+                updated_order = self.data.update_order(order_status, order_id)
+                if isinstance(updated_order, object):
                     response_object = {
                         'status': '202',
                         'message': 'Status has been updated successfully'
