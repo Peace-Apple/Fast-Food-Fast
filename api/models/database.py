@@ -185,6 +185,12 @@ class DatabaseConnection:
         update = """UPDATE orders SET order_status = '{}' WHERE order_id = '{}';""".format(order_status, order_id)
         self.cursor.execute(update)
 
+    def get_order_history(self, user_id):
+        hist = """SELECT * FROM orders WHERE user_id ='{}';""".format(user_id)
+        self.cursor.execute(hist)
+        get_history = self.cursor.fetchall()
+        return get_history
+
     def check_admin(self):
         self.cursor.execute("UPDATE users SET user_type = 'TRUE' WHERE user_id = 10")
 
