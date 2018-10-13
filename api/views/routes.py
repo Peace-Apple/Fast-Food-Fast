@@ -26,7 +26,7 @@ class Urls:
                          methods=['POST'], strict_slashes=False)
         app.add_url_rule('/api/v2/users/orders/', view_func=OrdersController.as_view('make_order'),
                          methods=['POST'], strict_slashes=False)
-        app.add_url_rule('/api/v2/users/orders/', view_func=LoginControl.as_view('order_history'),
+        app.add_url_rule('/api/v2/users/orders/', view_func=LoginControl.as_view('get_order_history'),
                          methods=['GET'], strict_slashes=False)
         app.add_url_rule('/api/v2/orders/', view_func=OrdersController.as_view('get_all_orders'),
                          methods=['GET'], strict_slashes=False)
