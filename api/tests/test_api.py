@@ -5,7 +5,8 @@ from flask import json
 
 from unittest import TestCase
 
-from run import APP
+from run import app
+
 
 class TestFastFoodFast(TestCase):
     """
@@ -13,7 +14,7 @@ class TestFastFoodFast(TestCase):
        """
 
     def setUp(self):
-        self.app = APP
+        self.app = app
         self.client = self.app.test_client
 
     def register_user(self, user_name=None, email=None, phone_number=None, password=None, user_type=None):
