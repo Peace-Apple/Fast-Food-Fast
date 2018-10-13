@@ -42,19 +42,7 @@ class OrderModel:
 
         return order_data
 
-    # def order_history(self, user_id):
-    #     """
-    #     Get order history of a user
-    #     :return:
-    #     """
-    #
-    #     history = self.data.get_order_history()
-    #
-    #     if history:
-    #         if isinstance(history, list) and len(history) > 1:
-    #
-    #             return history
-    #     return None
+
 
 
 
