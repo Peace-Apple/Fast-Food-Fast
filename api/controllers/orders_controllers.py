@@ -148,7 +148,7 @@ class OrdersController(MethodView):
 
             if order_status not in status:
                 return ResponseErrors.order_status_not_found(order_status)
-            if self.data.find_order_by_id(order_id):
+            if self.data.get_a_specific_order(order_id):
 
                 updated_order = self.data.update_order(order_status, order_id)
                 if isinstance(updated_order, object):
