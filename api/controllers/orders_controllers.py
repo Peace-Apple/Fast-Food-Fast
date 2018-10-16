@@ -67,9 +67,10 @@ class OrdersController(MethodView):
         return ResponseErrors.denied_permission()
 
     @jwt_required
-    def get(self):
+    def get(self, order_id=None):
         """
         Method to return all existing orders
+        :param order_id:
         :return:
         """
         user = get_jwt_identity()
@@ -77,6 +78,8 @@ class OrdersController(MethodView):
         user_id = user[0]
 
         if user_type == "TRUE" and user_id:
+            if order_id:
+                return self.data.get_a_specific_order(order_id)
 
             current_orders = self.data.get_all_orders()
 
