@@ -83,6 +83,6 @@ class LoginControl(MethodView):
                 return jsonify(response_object), 200
             else:
                 return ResponseErrors.no_items('order')
-        return ResponseErrors.denied_permission()
+        return ResponseErrors.permission_denied()
 
 

@@ -66,7 +66,7 @@ class OrdersController(MethodView):
                     'data': order
                     }
                 return jsonify(response_object), 201
-        return ResponseErrors.denied_permission()
+        return ResponseErrors.permission_denied()
 
     @jwt_required
     @swag_from('../docs/get_orders.yml')
