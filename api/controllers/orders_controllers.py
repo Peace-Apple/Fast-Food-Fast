@@ -61,7 +61,6 @@ class OrdersController(MethodView):
 
             if item and order:
                 response_object = {
-                    'status': 'success',
                     'message': 'You have successfully posted an order',
                     'data': order
                     }
@@ -70,7 +69,7 @@ class OrdersController(MethodView):
 
     @jwt_required
     @swag_from('../docs/get_orders.yml')
-    def get(self):
+    def get(self, order_id=None):
         """
         Method to return all existing orders
         :return:
@@ -81,12 +80,14 @@ class OrdersController(MethodView):
 
         if user_type == "TRUE" and user_id:
 
+            if order_id:
+                return self.get_single(order_id)
+
             current_orders = self.data.get_all_orders()
 
             if isinstance(current_orders, object):
 
                 response_object = {
-                    "status": "200",
                     "msg": "success",
                     "data": current_orders
                     }
@@ -98,7 +99,7 @@ class OrdersController(MethodView):
 
     @jwt_required
     @swag_from('../docs/get_specific_order.yml')
-    def get(self, order_id):
+    def get_single(self, order_id):
         """
         method to return a specific order
         :param order_id:
@@ -114,7 +115,6 @@ class OrdersController(MethodView):
 
             if isinstance(single_order, object):
                 response_object = {
-                    'status': '200',
                     'msg': 'success',
                     'data': single_order
                 }
@@ -158,8 +158,8 @@ class OrdersController(MethodView):
                 updated_order = self.data.update_order(order_status, order_id)
                 if isinstance(updated_order, object):
                     response_object = {
-                        'status': '202',
                         'message': 'Status has been updated successfully'
+
                     }
                     return jsonify(response_object), 202
 
