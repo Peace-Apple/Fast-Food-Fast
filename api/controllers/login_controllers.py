@@ -2,6 +2,8 @@
 This module looks at the user login
 """
 import datetime
+
+from flasgger import swag_from
 from flask import request, jsonify
 from flask.views import MethodView
 from api.utils.validation import DataValidation
@@ -19,6 +21,7 @@ class LoginControl(MethodView):
     val = DataValidation()
     auth = Authenticate()
 
+    @swag_from('../docs/login.yml')
     def post(self):
         # to get post data
         post_data = request.get_json()
@@ -41,22 +44,23 @@ class LoginControl(MethodView):
         if user and Authenticate.verify_password(password, user[5]):
 
             response_object = {
-                'status': '200',
+                'status': 'success',
                 'message': 'You are logged in',
                 "access_token": create_access_token(identity=user, expires_delta=datetime.timedelta(minutes=3600)),
                 'logged_in_as': str(user[1])
                 }
 
-            return jsonify(response_object)
+            return jsonify(response_object), 200
 
         else:
             response_object = {
-                'status': '404',
+                'status': 'fail',
                 'message': 'User does not exist.'
             }
-            return jsonify(response_object)
+            return jsonify(response_object), 404
 
     @jwt_required
+    @swag_from('../docs/history.yml')
     def get(self):
         """
         Method to return the order history of a user
@@ -73,11 +77,10 @@ class LoginControl(MethodView):
             if isinstance(order_history, object):
 
                 response_object = {
-                    "status": "200",
                     "msg": "success",
                     "data": order_history
                 }
-                return jsonify(response_object)
+                return jsonify(response_object), 200
             else:
                 return ResponseErrors.no_items('order')
         return ResponseErrors.denied_permission()

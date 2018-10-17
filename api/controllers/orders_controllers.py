@@ -1,6 +1,7 @@
 """
 Module to handle order logic
 """
+from flasgger import swag_from
 from flask import request, jsonify
 from flask.views import MethodView
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -25,6 +26,7 @@ class OrdersController(MethodView):
     data = DatabaseConnection()
 
     @jwt_required
+    @swag_from('../docs/add_order.yml')
     def post(self):
         """
         Method to post an order
@@ -59,18 +61,18 @@ class OrdersController(MethodView):
 
             if item and order:
                 response_object = {
-                    'status': '201',
-                    'message': 'Successfully posted an order',
+                    'status': 'success',
+                    'message': 'You have successfully posted an order',
                     'data': order
                     }
-                return jsonify(response_object)
+                return jsonify(response_object), 201
         return ResponseErrors.denied_permission()
 
     @jwt_required
-    def get(self, order_id=None):
+    @swag_from('../docs/get_orders.yml')
+    def get(self):
         """
         Method to return all existing orders
-        :param order_id:
         :return:
         """
         user = get_jwt_identity()
@@ -78,8 +80,6 @@ class OrdersController(MethodView):
         user_id = user[0]
 
         if user_type == "TRUE" and user_id:
-            if order_id:
-                return self.data.get_a_specific_order(order_id)
 
             current_orders = self.data.get_all_orders()
 
@@ -90,13 +90,14 @@ class OrdersController(MethodView):
                     "msg": "success",
                     "data": current_orders
                     }
-                return jsonify(response_object)
+                return jsonify(response_object), 200
             else:
                 return ResponseErrors.no_items('order')
 
         return ResponseErrors.denied_permission()
 
     @jwt_required
+    @swag_from('../docs/get_specific_order.yml')
     def get(self, order_id):
         """
         method to return a specific order
@@ -117,7 +118,7 @@ class OrdersController(MethodView):
                     'msg': 'success',
                     'data': single_order
                 }
-                return jsonify(response_object)
+                return jsonify(response_object), 200
 
             else:
                 return ResponseErrors.no_order()
@@ -125,6 +126,7 @@ class OrdersController(MethodView):
         return ResponseErrors.denied_permission()
 
     @jwt_required
+    @swag_from('../docs/update_order_status.yml')
     def put(self, order_id):
         """
         Method to update an order status
@@ -159,7 +161,7 @@ class OrdersController(MethodView):
                         'status': '202',
                         'message': 'Status has been updated successfully'
                     }
-                    return jsonify(response_object)
+                    return jsonify(response_object), 202
 
             return ResponseErrors.no_items('order')
 

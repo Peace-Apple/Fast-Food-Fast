@@ -1,7 +1,7 @@
 """
 module to handle signup of the user
 """
-
+from flasgger import swag_from
 from flask import request, jsonify
 from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
@@ -17,6 +17,7 @@ class SignupControl(MethodView):
     myUser = Users()
     val = DataValidation()
 
+    @swag_from('../docs/signup.yml')
     def post(self):
 
         post_data = request.get_json()
@@ -50,7 +51,7 @@ class SignupControl(MethodView):
         del user.password
 
         response_object = {
-            'status': '201',
-            'message': 'Successfully registered'
+            'status': 'success',
+            'message': 'Your account has been created successfully'
             }
-        return jsonify(response_object)
+        return jsonify(response_object), 201

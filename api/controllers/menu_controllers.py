@@ -1,6 +1,7 @@
 """
 Module to handle menu logic
 """
+from flasgger import swag_from
 from flask import request, jsonify
 from flask.views import MethodView
 from api.handlers.response_errors import ResponseErrors
@@ -22,6 +23,7 @@ class MenusController(MethodView):
     data = DatabaseConnection()
 
     @jwt_required
+    @swag_from('../docs/add_menu_item.yml')
     def post(self):
         """
         Method to post a menu item
@@ -58,10 +60,11 @@ class MenusController(MethodView):
                 'message': 'Successfully added a new food item to the menu',
                 'data': food_data
                 }
-            return jsonify(response_object)
+            return jsonify(response_object), 200
         return ResponseErrors.denied_permission()
 
     @jwt_required
+    @swag_from('../docs/get_menu_item.yml')
     def get(self):
         """
         Method to return existing menu items
@@ -82,7 +85,7 @@ class MenusController(MethodView):
                     "status": "200",
                     "data": menu_data
                     }
-                return jsonify(response_object)
+                return jsonify(response_object), 200
             else:
                 return ResponseErrors.no_items('menu')
         return ResponseErrors.denied_permission()
