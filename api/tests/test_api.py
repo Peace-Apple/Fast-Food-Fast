@@ -17,7 +17,7 @@ class TestFastFoodFast(TestCase):
         self.app = app
         self.client = self.app.test_client
 
-    def register_user(self, user_name=None, email=None, phone_number=None, password=None, user_type=None):
+    def register_user(self, user_name=None, email=None, phone_number=None, password=None):
         return self.client().post(
             '/api/v2/auth/signup/',
             data=json.dumps(dict(
@@ -25,27 +25,26 @@ class TestFastFoodFast(TestCase):
                 email=email,
                 contact=phone_number,
                 password=password,
-                user_type=user_type
             )),
             content_type="application/json"
         )
 
     def test_missing_fields_during_signup(self):
         """
-        Test for missing fields during user registration
+        Test for missing fields when registering a new user
         :return:
         """
         register = self.client().post(
             '/api/v2/auth/signup/',
             data=json.dumps(dict(
-                user_name='Acio',
+                user_name='Peace',
                 email='apple@gmail.com',
-                phone_number='0789023564',
-                password='mylife',
+                phone_number='0704194672',
+                password='pesay',
             )),
             content_type="application/json"
         )
-        response_data = json.loads(self.register_user.data.decode())
+        response_data = json.loads(self.register_user)
         self.assertTrue(response_data['status'] == "fail")
         self.assertTrue(response_data['error_message'] == "some of these fields are missing")
         self.assertTrue(response_data['data'])
@@ -57,7 +56,7 @@ class TestFastFoodFast(TestCase):
         Test user registration with invalid data-type
         :return:
         """
-        register = self.register_user(5224524, 'acio@gmail.com', '0704252625', 'lifeisgood', 'admin')
+        register = self.register_user(5224524, 'acio@gmail.com', '0704252625', 'lifeisgood')
         received_data = json.loads(register.data.decode())
         self.assertTrue(received_data['status'] == 'fail')
         self.assertTrue(received_data['error_message'] == 'Only string data type supported')
