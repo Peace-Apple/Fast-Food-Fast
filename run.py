@@ -6,8 +6,10 @@ from flask import Flask
 from api.views.routes import Urls
 from api.models.database import DatabaseConnection
 from flask_jwt_extended import JWTManager
+from flasgger import Swagger
 
 app = Flask(__name__)
+Swagger(app)
 app.env = 'development'
 Urls.generate(app)
 app.config['JWT_SECRET_KEY'] = 'pass123'
