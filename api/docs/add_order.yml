@@ -1,0 +1,13 @@
+Add Order
+---
+tags:
+  - Orders
+parameters:
+  - in: body
+    name: body
+    required: true
+    type: string
+    description: This route is used to post a new order
+responses:
+  201:
+    description: You have posted an order

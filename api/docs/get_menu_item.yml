@@ -1,0 +1,13 @@
+Get Menu Item
+---
+tags:
+  - Menu
+parameters:
+  - in: body
+    name: body
+    required: true
+    type: string
+    description: This route is used to get available menu items
+responses:
+  200:
+    description: You have got menu items

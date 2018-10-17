@@ -9,5 +9,5 @@ parameters:
     type: string
     description: This route is used to login a user
 responses:
-  201:
+  200:
     description: You are now logged in
