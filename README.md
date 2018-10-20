@@ -32,6 +32,12 @@ This link takes you where the user interface template is hosted on gh-pages.
 
 This link takes you to the api that is hosted on heroku.
 
+### Documentation:
+The endpoints are documented using Flasgger. To view the documentation, you first run the application by running the 
+file run.py and thereafter copy and enter the link in your browser.
+http://127.0.0.1:5000/apidocs 
+This link will enable you view the documentation locally on your machine using localhost.
+
 ### Getting Started 
 The following will get you started
 #### Prerequisites
