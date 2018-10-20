@@ -1,4 +1,4 @@
- """
+"""
 Tests module
 """
 from flask import json
