@@ -36,12 +36,16 @@ class SignupControl(MethodView):
 
         if not user_name or not email or not phone_number or not password:
             return ResponseErrors.empty_data_fields()
+        elif not self.val.validate_password(password, 5):
+            return ResponseErrors.invalid_password()
         elif not self.val.validate_email(email):
             return ResponseErrors.invalid_email()
+        elif not self.val.validate_name(user_name):
+            return ResponseErrors.invalid_name()
         elif not self.val.check_if_email_exists(email):
             return ResponseErrors.email_already_exists()
         elif not self.val.validate_phone(phone_number):
-            return ResponseErrors.invalid_contact()
+            return ResponseErrors.invalid_phone_number()
         elif not self.val.check_if_user_name_exists(user_name):
             return ResponseErrors.username_already_exists()
 
