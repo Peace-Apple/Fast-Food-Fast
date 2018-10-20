@@ -12,14 +12,14 @@
 This is a food service delivery app for a restaurant.
 
 ### Features
-a. Create user accounts that can signin/signout from the app.
-b. Client can place an order for food.
-c. Admin can get list of orders.
-d. Admin can get a specific order.
-e. Admin can update the status of an order.
-f. Client can get the menu.
-g. Admin can add food option to the menu.
-h. User can view the order history 
+- Create user accounts that can signin/signout from the app.
+- Client can place an order for food.
+- Admin can get list of orders.
+- Admin can get a specific order.
+- Admin can update the status of an order.
+- Client can get the menu.
+- Admin can add food option to the menu.
+- User can view the order history 
 
 ### Links
 
