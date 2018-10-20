@@ -24,6 +24,18 @@ class DataValidation:
             return False
         return True
 
+    @staticmethod
+    def validate_password(password, length) -> bool:
+        """
+        password validator
+        :param password:
+        :param length:
+        :return:
+        """
+        if length > len(password):
+            return False
+        return password.isalnum()
+
     def check_if_email_exists(self, email):
         """
         Check if the email already exists
