@@ -3,11 +3,20 @@ Get Menu Item
 tags:
   - Menu
 parameters:
-  - in: body
-    name: body
+  - name: Authorization
+    in: header
+    description: Authorization header required for user authentication
     required: true
     type: string
-    description: This route is used to get available menu items
 responses:
   200:
-    description: You have got menu items
+    description: You have got all menu items
+security:
+  - JWT:
+    description: Pass in jwt token i.e Bearer <jwt>
+    type: apiKey
+    scheme: bearer
+    name: Authorization
+    in: header
+    template: "Bearer {apiKey}"
+    bearerFormat: JWT

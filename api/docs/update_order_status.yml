@@ -3,11 +3,28 @@ Update Order Status
 tags:
   - Orders
 parameters:
-  - in: body
-    name: body
+  - name: Authorization
+    in: header
+    description: Authorization header required for user authentication
+    required: true
+    type: string
+  - name: order_id
+    in: path
+    description: This is required for getting a single order
+  - name: body
+    in: body
     required: true
     type: string
     description: This route is used to update the order history for a user
 responses:
   200:
-    description: Order history has been updated
+    description: Order status has been updated
+security:
+  - JWT:
+    description: Pass in jwt token i.e Bearer <jwt>
+    type: apiKey
+    scheme: bearer
+    name: Authorization
+    in: header
+    template: "Bearer {apiKey}"
+    bearerFormat: JWT

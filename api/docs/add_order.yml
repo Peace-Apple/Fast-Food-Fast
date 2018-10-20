@@ -3,11 +3,25 @@ Add Order
 tags:
   - Orders
 parameters:
-  - in: body
-    name: body
+  - name: Authorization
+    in: header
+    description: Authorization header required for user authentication
+    required: true
+    type: string
+  - name: body
+    in: body
     required: true
     type: string
     description: This route is used to post a new order
 responses:
   201:
     description: You have posted an order
+security:
+  - JWT:
+    description: Pass in jwt token i.e Bearer <jwt>
+    type: apiKey
+    scheme: bearer
+    name: Authorization
+    in: header
+    template: "Bearer {apiKey}"
+    bearerFormat: JWT
