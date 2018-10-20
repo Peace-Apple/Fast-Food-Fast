@@ -13,15 +13,16 @@ class ResponseErrors:
     def missing_fields(key):
         response_object = {
             "status": "fail",
-            "error_message": "some fields are missing" + key
-                   }
+            "error_message": "some fields are missing",
+            "data": key}
         return jsonify(response_object), 400
 
     @staticmethod
     def invalid_data_format():
         response_object = {
             'status': 'fail',
-            'error_message': 'Please use character strings'
+            'error_message': 'Please use character strings',
+            'data': False
         }
         return jsonify(response_object), 400
 
@@ -29,7 +30,8 @@ class ResponseErrors:
     def empty_data_fields():
         response_object = {
             'status': 'fail',
-            'error_message': 'Some fields have no data'
+            'error_message': 'Some fields have no data',
+            'data': request.get_json()
         }
         return jsonify(response_object), 400
 
@@ -60,26 +62,29 @@ class ResponseErrors:
     @staticmethod
     def invalid_password():
         response_object = {
-            "status": "fail",
-            "error_message": "Password is wrong. It should be at-least 6 characters"
-                             " long, and alphanumeric."
+            'status': 'fail',
+            'error_message': 'Password is wrong. It should be at-least 5 characters long, and alphanumeric.',
+            'data': False
         }
         return jsonify(response_object), 400
 
     @staticmethod
     def invalid_email():
+        req = request.get_json()
         return jsonify({
             "status": "fail",
-            "error_message": "User email {0} is wrong, It should be "
-                             "in the format (xxxxx@xxxx.xxx)"
+            "error_message": "User email {0} is wrong, It should be in the format (xxxxx@xxxx.xxx).format(req['email']",
+            "data": req
 
         }), 400
 
     @staticmethod
-    def invalid_contact():
+    def invalid_phone_number():
+        req = request.get_json()
         return jsonify({"error_message": "Contact {0} is wrong. should be in"
                                          " the form, (070******) and between 10 and 13 "
-                                         "digits"
+                                         "digits".format(req['contact']),
+                        "data": req
                         }), 400
 
     @staticmethod
@@ -87,8 +92,7 @@ class ResponseErrors:
         response_object = {
             'status': 'fail',
             'error_message': 'Username already taken',
-
-
+            'data': False
         }
         return jsonify(response_object), 409
 
@@ -122,7 +126,8 @@ class ResponseErrors:
     def invalid_name():
         return jsonify({
             "status": "fail",
-            "error_message": "A name should consist of only alphabetic characters"
+            "error_message": "A name should consist of only alphabetic characters",
+            "data": request.get_json()
                    }), 400
 
     @staticmethod
