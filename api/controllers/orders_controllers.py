@@ -98,7 +98,6 @@ class OrdersController(MethodView):
         return ResponseErrors.denied_permission()
 
     @jwt_required
-    @swag_from('../docs/get_specific_order.yml')
     def get_single(self, order_id):
         """
         method to return a specific order
